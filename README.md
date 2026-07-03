@@ -1,26 +1,32 @@
-# AOS v1.6 — Guided Workflow + Staged Commits
+# AOS v1.7.1 — Readonly Fix
 
-## Purpose
+## Fix
 
-This release strengthens the AOS 2.0 foundation by making inspection entry safer.
+This release fixes the NiceGUI server error:
 
-## Added
+`TypeError: got an unexpected keyword argument 'readonly'`
 
-- Guided inspection now stages draft inspections before committing.
-- Inspection validation before save.
-- Evidence preview before staging.
-- Confidence score before staging.
-- Pending guided inspections list.
-- Commit staged guided inspection into the real inspection log.
-- Reject staged guided inspection.
-- Task engine and AI advisor retained.
-- Knowledge graph retained.
-- Installer safety retained.
+## Cause
 
-## Why this matters
+Some NiceGUI versions do not accept `readonly=True` as a direct argument on `ui.textarea`.
 
-AOS should not silently write weak or incomplete records. This release introduces the safer pattern:
+## Change
 
-Draft → Validate → Stage → Commit
+Changed:
 
-This becomes the foundation for future AI-assisted natural language entry.
+`ui.textarea(..., readonly=True)`
+
+to:
+
+`ui.textarea(...).props('readonly')`
+
+## Included
+
+This release is based on v1.7, so it also includes:
+- Natural Language Intake
+- Guided Inspection Drafts
+- Tasks
+- AI Advisor
+- Knowledge Graph
+- CRUD fixes
+- Installer safety

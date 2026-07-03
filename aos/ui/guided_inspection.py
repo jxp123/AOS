@@ -35,7 +35,7 @@ def guided_inspection_page():
         temperament = ui.select(['Calm','OK','Defensive','Aggressive','Unknown'], label='Temperament', value='Unknown').classes('w-48')
         notes = ui.textarea('Notes').classes('w-full')
 
-        evidence_box = ui.textarea('Evidence preview', value='', readonly=True).classes('w-full')
+        evidence_box = ui.textarea('Evidence preview', value='').props('readonly').classes('w-full')
         result_label = ui.label('Validation: not run')
 
         def payload():

@@ -7,6 +7,7 @@ from aos.ui.queens import queens_page
 from aos.ui.equipment import equipment_page
 from aos.ui.inspections import inspections_page
 from aos.ui.guided_inspection import guided_inspection_page
+from aos.ui.natural_language_intake import natural_language_intake_page
 from aos.ui.genealogy import genealogy_page
 from aos.ui.knowledge_graph import knowledge_graph_page
 from aos.ui.weather import weather_page
@@ -33,6 +34,7 @@ def index():
         colonies = ui.tab('Colonies')
         queens = ui.tab('Queens')
         equipment = ui.tab('Equipment')
+        natural_language = ui.tab('Natural Language Intake')
         guided_inspection = ui.tab('Guided Inspection')
         inspections = ui.tab('Inspections')
         genealogy = ui.tab('Genealogy')
@@ -54,6 +56,7 @@ def index():
         with ui.tab_panel(colonies): colonies_page()
         with ui.tab_panel(queens): queens_page()
         with ui.tab_panel(equipment): equipment_page()
+        with ui.tab_panel(natural_language): natural_language_intake_page()
         with ui.tab_panel(guided_inspection): guided_inspection_page()
         with ui.tab_panel(inspections): inspections_page()
         with ui.tab_panel(genealogy): genealogy_page()
