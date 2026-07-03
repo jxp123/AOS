@@ -1,4 +1,3 @@
-
 from sqlalchemy import Column, Integer, String, Text, Boolean, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from aos.db.session import Base
@@ -8,12 +7,11 @@ class Colony(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String, unique=True, nullable=False)
     name = Column(String, nullable=False)
-    colony_type = Column(String, default='Hive')   # Hive / Nuc
-    equipment = Column(String, default='Unknown')  # National / 14x12 / Langstroth
+    colony_type = Column(String, default='Hive')
+    equipment = Column(String, default='Unknown')
     objective = Column(String, default='')
     status = Column(String, default='Active')
     notes = Column(Text, default='')
-
     inspections = relationship('Inspection', back_populates='colony', cascade='all, delete-orphan')
 
 class Queen(Base):
@@ -53,7 +51,6 @@ class Inspection(Base):
     stores_frames = Column(Float, default=0)
     temperament = Column(String, default='Unknown')
     notes = Column(Text, default='')
-
     colony = relationship('Colony', back_populates='inspections')
 
 class GenealogyEvent(Base):
@@ -65,15 +62,6 @@ class GenealogyEvent(Base):
     target_colony = Column(String, default='')
     queen_code = Column(String, default='')
     details = Column(Text, default='')
-
-class ManagementAction(Base):
-    __tablename__ = 'management_actions'
-    id = Column(Integer, primary_key=True)
-    date = Column(String, nullable=False)
-    colony_code = Column(String, default='')
-    action_type = Column(String, default='')
-    details = Column(Text, default='')
-    reason = Column(Text, default='')
 
 class AuditLog(Base):
     __tablename__ = 'audit_log'

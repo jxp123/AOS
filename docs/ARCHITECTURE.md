@@ -1,13 +1,13 @@
+# AOS v0.6.1 Architecture
 
-# AOS v0.6 Architecture
+Central active apiary entity view:
 
-## Rule
-UI -> Services/Repository -> Database
+`Repository.list_apiary_entities(active_only=True)`
 
-No UI screen should directly own or duplicate database state.
+Used by:
+- Colonies screen
+- New Inspection dropdown
+- Morning briefing
+- AI export
 
-## AI workflow
-SQLite -> Repository -> Validation -> apiary_state.json -> ChatGPT
-
-## Next
-v0.6.1 restores full CRUD on top of the repository layer.
+Invariant: if a hive/nuc appears in the inspection dropdown, it exists in the Colonies table.

@@ -1,4 +1,3 @@
-
 def recommendation_for_colony(colony, risk):
     objective = (colony.get('objective') or '').lower()
     if 'requeening after swarm' in objective:

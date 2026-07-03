@@ -1,6 +1,4 @@
-
 import json
-from pathlib import Path
 from datetime import date
 from aos.services.repository import Repository
 from aos.engines.morning_engine import morning_briefing
@@ -11,17 +9,17 @@ def export_ai_state():
     repo = Repository()
     state = {
         'date': str(date.today()),
+        'apiary_entities': repo.list_apiary_entities(active_only=True),
         'colonies': repo.list_colonies(),
         'queens': repo.list_queens(),
         'equipment': repo.list_equipment(),
         'genealogy': repo.list_genealogy(),
         'morning_briefing': morning_briefing(),
         'hard_rules': [
+            'New Inspection dropdown must use Repository.list_apiary_entities().',
             'Never infer equipment type.',
-            'Nuc 94 is 14x12, not National.',
-            'Validate frame compatibility before recommendations.',
-            'Unknown is preferable to guessed.',
-        ],
+            'Nuc 94 is 14x12, not National.'
+        ]
     }
     path = EXPORT_DIR / 'apiary_state.json'
     path.write_text(json.dumps(state, indent=2), encoding='utf-8')

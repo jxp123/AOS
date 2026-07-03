@@ -1,33 +1,19 @@
+# Apiary Operating System — v0.6.1
 
-# Apiary Operating System — v0.6 Core Framework
+## Fix in this release
 
-This release moves AOS from prototype screens toward a maintainable application architecture.
+The New Inspection dropdown now pulls from one central view:
 
-## What is new in v0.6
+`Repository.list_apiary_entities()`
 
-- Shared repository/service layer
-- Stable SQLite schema
-- Colony, Queen, Equipment, Inspection and Genealogy models
-- CRUD-ready services
-- Validation engine foundation
-- Risk engine foundation
-- Decision engine foundation
-- Commit/audit groundwork
-- UI pages separated into modules
-- Basic AI state export skeleton
+The Colonies screen, Morning Briefing, AI Export and New Inspection dropdown all use the same source: the `colonies` table through the repository layer.
 
-## How to run
+## Invariant
 
-1. Extract the ZIP.
+If a hive/nuc appears in the New Inspection dropdown, it must exist in the Colonies screen.
+
+## Run
+
+1. Extract ZIP.
 2. Double-click `Start_AOS.bat`.
-3. Browser opens at `http://127.0.0.1:8000`.
-
-## Requirements
-
-- Python 3.11+
-- During Python installation, tick **Add Python to PATH**.
-
-## Development principle
-
-All UI screens must read/write through services and repositories.
-No UI page should own independent copies of the database state.
+3. Open `http://127.0.0.1:8000`.
