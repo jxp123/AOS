@@ -4,6 +4,7 @@ from aos.services.repository import Repository
 from aos.engines.natural_language_parser import parse_inspection_note
 from aos.services.guided_inspection_service import GuidedInspectionService
 from aos.engines.validation_engine import validation_summary
+from aos.engines.inspection_scheduler import inspection_schedule, scheduler_summary
 def result(name,status,message=''): return {'test':name,'status':status,'message':message}
 def run_self_tests():
     results=[]

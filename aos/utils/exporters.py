@@ -8,6 +8,7 @@ from aos.services.knowledge_graph_service import KnowledgeGraphService
 from aos.engines.task_engine import generated_tasks
 from aos.engines.advisor_engine import advisor_recommendations
 from aos.engines.validation_engine import validation_summary
+from aos.engines.inspection_scheduler import inspection_schedule, scheduler_summary
 def export_excel():
     EXPORT_DIR.mkdir(exist_ok=True); repo=Repository(); path=EXPORT_DIR/f"aos_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
     with pd.ExcelWriter(path,engine='openpyxl') as writer:

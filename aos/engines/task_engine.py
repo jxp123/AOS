@@ -2,6 +2,7 @@ from datetime import date
 from aos.services.repository import Repository
 from aos.services.guided_inspection_service import GuidedInspectionService
 from aos.engines.risk_engine import colony_risk,nuc_expansion_score
+from aos.engines.inspection_scheduler import inspection_schedule
 def generated_tasks():
     repo=Repository(); latest=repo.latest_inspection_by_colony(); tasks=[]
     for c in repo.list_apiary_entities(True):
@@ -13,6 +14,19 @@ def generated_tasks():
         if c.get('equipment')=='Unknown': tasks.append({'date':str(date.today()),'priority':'Medium','colony_code':c['code'],'task_type':'Data Quality','reason':'Equipment unknown.','recommendation':'Update equipment type.','evidence':''})
     for d in GuidedInspectionService().list_drafts():
         if d['status']=='Staged': tasks.append({'date':d['created_at'],'priority':'High' if d['validation_status']=='PASS' else 'Medium','colony_code':d['colony_code'],'task_type':'Commit Staged Inspection','reason':d['validation_message'],'recommendation':'Commit or reject staged draft.','evidence':d['evidence']})
+    
+    for item in inspection_schedule():
+        if item['priority'] == 'High':
+            tasks.append({
+                'date': item['next_due'],
+                'priority': 'High',
+                'colony_code': item['code'],
+                'task_type': 'Inspection Due',
+                'reason': item['status'],
+                'recommendation': item['action'],
+                'evidence': f"Last inspection={item['last_inspection']}; days since={item['days_since']}; strategy={item['strategy']}",
+            })
+
     order={'High':0,'Medium':1,'Low':2}; tasks.sort(key=lambda x:order.get(x['priority'],9)); return tasks
 def task_summary():
     tasks=generated_tasks(); return {'total':len(tasks),'high':len([t for t in tasks if t['priority']=='High']),'medium':len([t for t in tasks if t['priority']=='Medium'])}

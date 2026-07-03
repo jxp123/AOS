@@ -1,6 +1,6 @@
 from pathlib import Path
-APP_VERSION='2.0.0'
-SCHEMA_VERSION='2.0'
+APP_VERSION='2.1.0'
+SCHEMA_VERSION='2.1'
 ROOT_DIR=Path(__file__).resolve().parents[1]
 DATA_DIR=ROOT_DIR/'data'
 DB_PATH=DATA_DIR/'aos.db'
