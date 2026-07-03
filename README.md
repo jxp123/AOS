@@ -1,28 +1,36 @@
-# AOS v1.3.1 — UI + CRUD Fix Release
+# AOS v1.3.2 — Installer Safety Release
 
-## Fixes in this release
+## Main purpose
 
-This release addresses the issues reported in v1.3:
+This release makes installation and running safer after the disk-space issue.
 
-- Inspection save button appeared to do nothing.
-- Weather / forage save showed success but did not refresh the table.
-- Colonies add/edit/delete disappeared.
-- Equipment add/edit/delete disappeared.
-- Queens add/edit/delete restored as well.
+## Adds / fixes
 
-## What changed
+- Disk space check before install and run.
+- Clearer message if C: drive is low on space.
+- `Clean_AOS_Cache.bat` to clear pip cache.
+- `Doctor_AOS.bat` to check Python, folders, database and disk space.
+- Run script creates a backup before starting.
+- Installer no longer silently continues after failed package install.
+- Previous v1.3.1 fixes retained:
+  - Inspection save refreshes log.
+  - Weather save refreshes table.
+  - Colonies Add/Edit/Delete.
+  - Equipment Add/Edit/Delete.
+  - Queens Add/Edit/Delete.
 
-- Inspection table now refreshes after saving.
-- Weather table now refreshes after saving.
-- Colonies screen has Add / Edit / Delete buttons again.
-- Equipment screen has Add / Edit / Delete buttons again.
-- Queens screen has Add / Edit / Delete buttons again.
-- Repository methods for create/update/delete have been restored.
-- Errors now show a visible notification rather than silently failing.
+## Recommended use
 
-## Recommended after installing
+First time:
 
-1. Run `Run_AOS.bat`.
-2. Open **Migrations** and run **Apply Safe Migrations** if needed.
-3. Open **Data Integrity** and run **Restore Missing Baseline Entities** if needed.
-4. Test by adding one inspection and one weather record.
+`Install_AOS.bat`
+
+Daily:
+
+`Run_AOS.bat`
+
+If installation fails:
+
+1. Run `Clean_AOS_Cache.bat`
+2. Run `Doctor_AOS.bat`
+3. Run `Repair_AOS.bat`
