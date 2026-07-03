@@ -1,5 +1,3 @@
-# Authoritative baseline records for currently known AOS active entities.
-# These are used to detect records lost in earlier releases.
 BASELINE_COLONIES = [
     ('H1','Hive 1','Hive','National','Honey / Build','Active','Double brood; super added.'),
     ('H2','Hive 2','Hive','National','Build / Recover','Active','Essex Buckfast; low population recovery.'),
@@ -25,14 +23,12 @@ BASELINE_COLONIES = [
     ('N100','Nuc 100','Nuc','National','Recover after brood donation','Active','Donated 1 brood frame for Jolanta nuc.'),
     ('NJOL','Jolanta Nuc','Nuc','National','Scottish Carnica evaluation','Active','Created from brood frames from N91 and N100.'),
 ]
-
 BASELINE_QUEENS = [
     ('Q-JOLANTA','Jolanta','Scottish Carnica','Denrosa / Jolanta','NJOL','Introduced / pending confirmation','Confirmed','Purchased queen; strategic asset.'),
     ('Q-H13-CARP','Carpathian H13','Carpathian','Purchased','H13','Active','Confirmed','Former Nuc 93.'),
     ('Q-H19-CARP','Carpathian H19','Carpathian','Purchased','H19','Active','Confirmed','Carpathian queen accepted.'),
     ('Q-N96-CARP','Carpathian N96','Carpathian','Purchased','N96','Active','Confirmed','Langstroth nuc.'),
 ]
-
 BASELINE_EQUIPMENT = [
     ('FEED-001','Abelo Ashford Poly Feeder','Feeder','H12','National','In use','Approx 1-1.5L syrup moved from Hive 15.'),
     ('SUPER-H15-001','Hive 15 First Super','Super','H15','National','Filling','First super being filled.'),
