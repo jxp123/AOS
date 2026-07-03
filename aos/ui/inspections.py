@@ -3,8 +3,7 @@ from datetime import date
 from aos.services.repository import Repository
 def inspections_page():
     ui.label('Inspections').classes('text-h5')
-    repo=Repository()
-    entities=repo.list_apiary_entities(True)
+    repo=Repository(); entities=repo.list_apiary_entities(True)
     options={f"{e['code']} — {e['name']} ({e['type']}, {e['equipment']})": e['id'] for e in entities}
     sel=ui.select(options,label='Colony / Nuc').classes('w-96')
     d=ui.input('Date',value=str(date.today())).classes('w-48')

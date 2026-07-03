@@ -1,9 +1,11 @@
 from datetime import datetime
 from aos.db.session import init_db, get_session
 from aos.db.models import Colony, Queen, Equipment, GenealogyEvent, AuditLog, SystemMeta
-from aos.core.settings import SCHEMA_VERSION
+from aos.core.settings import SCHEMA_VERSION, DATA_DIR, EXPORT_DIR, IMPORT_DIR, BACKUP_DIR, LOG_DIR
 
 def boot_aos():
+    for folder in [DATA_DIR, EXPORT_DIR, IMPORT_DIR, BACKUP_DIR, LOG_DIR]:
+        folder.mkdir(exist_ok=True)
     init_db()
     seed_data()
 
@@ -39,5 +41,5 @@ def seed_data():
             session.add(GenealogyEvent(date='2026-07-03', event_type='Brood donation', source_colony='N100', target_colony='NJOL', queen_code='Q-JOLANTA', details='Nuc 100 donated 1 brood frame; queen seen.'))
 
         if session.query(AuditLog).count() == 0:
-            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v1.0 baseline data.'))
+            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v1.1 baseline data.'))
         session.commit()

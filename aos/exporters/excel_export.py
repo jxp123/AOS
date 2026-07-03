@@ -2,12 +2,8 @@ from datetime import datetime
 import pandas as pd
 from aos.services.repository import Repository
 from aos.core.settings import EXPORT_DIR
-
 def export_excel():
-    EXPORT_DIR.mkdir(exist_ok=True)
-    repo = Repository()
-    stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    path = EXPORT_DIR / f'aos_export_{stamp}.xlsx'
+    EXPORT_DIR.mkdir(exist_ok=True); repo=Repository(); stamp=datetime.now().strftime('%Y%m%d_%H%M%S'); path=EXPORT_DIR/f'aos_export_{stamp}.xlsx'
     with pd.ExcelWriter(path, engine='openpyxl') as writer:
         pd.DataFrame(repo.list_colonies()).to_excel(writer, sheet_name='Colonies', index=False)
         pd.DataFrame(repo.list_queens()).to_excel(writer, sheet_name='Queens', index=False)

@@ -1,43 +1,49 @@
-# Apiary Operating System — v1.0 Stable Local Release
+# Apiary Operating System — v1.1 Dummy-Proof Launcher Release
 
-AOS is a local browser-based apiary management application.
+## What this release adds
 
-## v1.0 focus
-This release consolidates the earlier prototypes into a more stable local build:
-- One central repository layer
-- Stable core tables
-- Dashboard / Morning Briefing
-- Colonies and Nucs
-- Queens
-- Equipment
-- Inspections
-- Genealogy
-- Weather / Forage
-- Seasonal Planner
-- Validation
-- Commit Queue
-- Excel Export
-- AI State Export
-- Manual Backups
-- Basic data quality checks
+This release focuses on making AOS easier and safer to run.
 
-## Run
-1. Extract the ZIP.
-2. Double-click `Start_AOS.bat`.
-3. Browser opens at `http://127.0.0.1:8000`.
+New launchers:
+- `Install_AOS.bat` — first-time setup
+- `Run_AOS.bat` — daily launcher
+- `Repair_AOS.bat` — repair dependencies
+- `Backup_AOS.bat` — manual database backup
+- `Start_AOS.bat` — compatibility launcher that calls `Run_AOS.bat`
 
-## First-run note
-A local SQLite database will be created in:
+New safeguards:
+- Uses a local Python virtual environment `.venv`
+- Does not install packages globally
+- Checks Python is installed
+- Creates required folders automatically
+- Backs up the database before repair
+- Writes startup logs to `logs/`
+- Clearer error messages
 
-`data/aos.db`
+## First time
 
-This database is your local source of truth.
+Double-click:
 
-## Important
-This is a stable local foundation, not the final commercial-grade product.
-Next work should focus on:
-- database migrations,
-- stronger editing forms,
-- test automation,
-- migration from your real Excel/workbook history,
-- richer rule/decision engine.
+`Install_AOS.bat`
+
+Then double-click:
+
+`Run_AOS.bat`
+
+## Normal daily use
+
+Double-click:
+
+`Run_AOS.bat`
+
+## If something breaks
+
+Double-click:
+
+`Repair_AOS.bat`
+
+## Manual backup
+
+Double-click:
+
+`Backup_AOS.bat`

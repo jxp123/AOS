@@ -13,13 +13,14 @@ from aos.ui.validation import validation_page
 from aos.ui.commit import commit_page
 from aos.ui.import_export import import_export_page
 from aos.ui.ai import ai_page
+from aos.ui.system import system_page
 
 boot_aos()
 
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label(f'v{APP_VERSION} Stable Local Release').classes('text-subtitle1')
+    ui.label(f'v{APP_VERSION} Dummy-Proof Local Release').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')
@@ -34,6 +35,7 @@ def index():
         commit = ui.tab('Commit Queue')
         io = ui.tab('Import / Export')
         ai = ui.tab('AI Export')
+        system = ui.tab('System')
 
     with ui.tab_panels(tabs, value=dashboard).classes('w-full'):
         with ui.tab_panel(dashboard): dashboard_page()
@@ -48,5 +50,6 @@ def index():
         with ui.tab_panel(commit): commit_page()
         with ui.tab_panel(io): import_export_page()
         with ui.tab_panel(ai): ai_page()
+        with ui.tab_panel(system): system_page()
 
-ui.run(title='AOS', host='127.0.0.1', port=8000)
+ui.run(title='AOS', host='127.0.0.1', port=8000, reload=False)

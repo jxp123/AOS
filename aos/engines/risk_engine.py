@@ -8,23 +8,11 @@ def colony_risk(colony):
     return {'code':colony.get('code'),'risk':'High' if score>=50 else 'Medium' if score>=25 else 'Low','score':score,'reason':'; '.join(reasons) or 'No major flags'}
 
 def nuc_expansion_score(colony, latest_inspection=None):
-    if colony.get('type') != 'Nuc':
-        return {'score':0, 'recommendation':'Not a nuc'}
-    if colony.get('equipment') == 'Unknown':
-        return {'score':10, 'recommendation':'Do not move: equipment unknown'}
-    if 'recover after brood donation' in (colony.get('objective') or '').lower():
-        return {'score':15, 'recommendation':'Do not move: recovering after brood donation'}
-    score = 0
-    reasons = []
+    if colony.get('type') != 'Nuc': return {'score':0, 'recommendation':'Not a nuc'}
+    if colony.get('equipment') == 'Unknown': return {'score':10, 'recommendation':'Do not move: equipment unknown'}
+    if 'recover after brood donation' in (colony.get('objective') or '').lower(): return {'score':15, 'recommendation':'Do not move: recovering after brood donation'}
+    score=0
     if latest_inspection:
-        brood = latest_inspection.get('brood_frames') or 0
-        bees = latest_inspection.get('bee_coverage_frames') or 0
-        if brood >= 5: score += 35; reasons.append('strong brood')
-        if bees >= 5: score += 25; reasons.append('good bee coverage')
-    if score >= 50:
-        rec = 'Review for transfer to hive'
-    elif score >= 25:
-        rec = 'Review again in 1 week'
-    else:
-        rec = 'Leave as nuc'
-    return {'score':score, 'recommendation':rec, 'reason':'; '.join(reasons) or 'limited evidence'}
+        if (latest_inspection.get('brood_frames') or 0) >= 5: score += 35
+        if (latest_inspection.get('bee_coverage_frames') or 0) >= 5: score += 25
+    return {'score':score, 'recommendation':'Review for transfer to hive' if score>=50 else 'Review again in 1 week' if score>=25 else 'Leave as nuc'}
