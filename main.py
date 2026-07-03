@@ -6,11 +6,14 @@ from aos.ui.colonies import colonies_page
 from aos.ui.queens import queens_page
 from aos.ui.equipment import equipment_page
 from aos.ui.inspections import inspections_page
+from aos.ui.guided_inspection import guided_inspection_page
 from aos.ui.genealogy import genealogy_page
 from aos.ui.knowledge_graph import knowledge_graph_page
 from aos.ui.weather import weather_page
 from aos.ui.seasonal import seasonal_page
 from aos.ui.validation import validation_page
+from aos.ui.tasks import tasks_page
+from aos.ui.ai_advisor import ai_advisor_page
 from aos.ui.data_integrity import data_integrity_page
 from aos.ui.migrations import migrations_page
 from aos.ui.commit import commit_page
@@ -30,11 +33,14 @@ def index():
         colonies = ui.tab('Colonies')
         queens = ui.tab('Queens')
         equipment = ui.tab('Equipment')
+        guided_inspection = ui.tab('Guided Inspection')
         inspections = ui.tab('Inspections')
         genealogy = ui.tab('Genealogy')
         knowledge_graph = ui.tab('Knowledge Graph')
         weather = ui.tab('Weather / Forage')
         seasonal = ui.tab('Seasonal Planner')
+        tasks = ui.tab('Tasks')
+        ai_advisor = ui.tab('AI Advisor')
         validation = ui.tab('Validation')
         integrity = ui.tab('Data Integrity')
         migrations = ui.tab('Migrations')
@@ -48,11 +54,14 @@ def index():
         with ui.tab_panel(colonies): colonies_page()
         with ui.tab_panel(queens): queens_page()
         with ui.tab_panel(equipment): equipment_page()
+        with ui.tab_panel(guided_inspection): guided_inspection_page()
         with ui.tab_panel(inspections): inspections_page()
         with ui.tab_panel(genealogy): genealogy_page()
         with ui.tab_panel(knowledge_graph): knowledge_graph_page()
         with ui.tab_panel(weather): weather_page()
         with ui.tab_panel(seasonal): seasonal_page()
+        with ui.tab_panel(tasks): tasks_page()
+        with ui.tab_panel(ai_advisor): ai_advisor_page()
         with ui.tab_panel(validation): validation_page()
         with ui.tab_panel(integrity): data_integrity_page()
         with ui.tab_panel(migrations): migrations_page()

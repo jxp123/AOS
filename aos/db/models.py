@@ -118,3 +118,27 @@ class GraphRelationship(Base):
     confidence = Column(Float, default=1.0)
     evidence = Column(Text, default='')
     notes = Column(Text, default='')
+
+
+class TaskItem(Base):
+    __tablename__ = 'task_items'
+    id = Column(Integer, primary_key=True)
+    date = Column(String, nullable=False)
+    colony_code = Column(String, default='')
+    task_type = Column(String, default='')
+    priority = Column(String, default='Medium')
+    status = Column(String, default='Open')
+    reason = Column(Text, default='')
+    recommendation = Column(Text, default='')
+    evidence = Column(Text, default='')
+
+class AdvisorRecommendation(Base):
+    __tablename__ = 'advisor_recommendations'
+    id = Column(Integer, primary_key=True)
+    date = Column(String, nullable=False)
+    colony_code = Column(String, default='')
+    priority = Column(String, default='Medium')
+    confidence = Column(Float, default=0)
+    recommendation = Column(Text, default='')
+    evidence = Column(Text, default='')
+    risks = Column(Text, default='')

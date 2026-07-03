@@ -6,12 +6,14 @@ EXPECTED_COLUMNS = {
     'inspections': {
         'bee_coverage_frames': 'FLOAT DEFAULT 0',
     },
-    'graph_relationships': {},
     'queens': {
         'temperament_score': 'FLOAT DEFAULT 0',
         'brood_score': 'FLOAT DEFAULT 0',
         'honey_score': 'FLOAT DEFAULT 0',
     },
+    'graph_relationships': {},
+    'task_items': {},
+    'advisor_recommendations': {},
 }
 
 def table_columns(table):
@@ -42,7 +44,6 @@ def apply_safe_migrations():
                 continue
             conn.execute(text(item['sql']))
             applied.append(item)
-        # update schema version
         try:
             conn.execute(text("INSERT OR REPLACE INTO system_meta (key, value) VALUES ('schema_version', :v)"), {'v': SCHEMA_VERSION})
         except Exception:

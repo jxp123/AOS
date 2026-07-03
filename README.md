@@ -1,30 +1,35 @@
-# AOS v1.4 — Knowledge Graph Foundation
+# AOS v1.5 — AOS 2.0 Foundation
 
 ## Purpose
 
-This release pulls forward the Phase 5 architecture: the Knowledge Graph.
+This is the first accelerated step toward AOS 2.0.
 
-It does not attempt to finish all future 2.0 intelligence, but it introduces the core structures needed for:
+It does not claim to be the final 2.0 product. Instead, it adds the core foundation we need for 2.0:
 
-- Queen genealogy
-- Colony lineage
-- Event-based history
-- Relationships between colonies, queens, equipment and inspections
-- Timeline-style views
-- Graph export for future AI reasoning
+- Guided inspection workflow
+- Task engine
+- AI advisor scaffold
+- Evidence engine
+- Confidence engine
+- Improved dashboard
+- Knowledge graph retained
+- Timeline retained
+- Migration-safe structure retained
+- Data integrity retained
+- CRUD fixes retained
 
-## Added
+## New tabs / changed tabs
 
-- Knowledge Graph tab
-- Colony timeline view
-- Queen lineage view
-- Graph relationship export
-- Graph summary cards
-- `KnowledgeGraphService`
-- AI export now includes graph data
-- Migration check for graph tables
-- Existing CRUD/UI fixes retained
+- **Guided Inspection** — step-based inspection entry instead of one flat form.
+- **Tasks** — generated operational tasks from risk, season, data quality and inspections.
+- **AI Advisor** — produces evidence-based recommendations from current AOS data.
+- **Morning Briefing** — now includes task summary and advisor summary.
 
-## Important
+## Recommended workflow
 
-This is a foundation release. It creates the graph layer and views, but it does not yet do advanced visual node-link diagrams.
+1. Run `Run_AOS.bat`.
+2. Open **Migrations** and apply safe migrations if needed.
+3. Open **Data Integrity** and restore missing baseline if needed.
+4. Use **Guided Inspection** instead of the old Inspections form where possible.
+5. Use **Tasks** to decide what needs attention.
+6. Use **AI Advisor** to review evidence and confidence before taking action.
