@@ -1,49 +1,14 @@
 from nicegui import ui
-from aos.engines.morning_engine import morning_briefing
+from aos.config import APP_VERSION
+from aos.engines.task_engine import task_summary, generated_tasks
+from aos.engines.advisor_engine import advisor_summary, advisor_recommendations
 from aos.engines.seasonal_engine import seasonal_tasks
-from aos.engines.task_engine import task_summary
-from aos.engines.advisor_engine import advisor_summary
-from aos.core.settings import APP_VERSION
-
-def dashboard_page():
-    ui.label('Morning Briefing').classes('text-h5')
-    season = seasonal_tasks()
-    tasks = task_summary()
-    advisor = advisor_summary()
-
+def page():
+    ui.label('Morning Briefing').classes('text-h5'); tasks=task_summary(); advisor=advisor_summary(); season=seasonal_tasks()
     with ui.row():
-        with ui.card():
-            ui.label('AOS Version')
-            ui.label(APP_VERSION).classes('text-h5')
-        with ui.card():
-            ui.label('Season')
-            ui.label(season['phase']).classes('text-subtitle1')
-        with ui.card():
-            ui.label('High Priority Tasks')
-            ui.label(str(tasks['high'])).classes('text-h5')
-        with ui.card():
-            ui.label('Advisor High Priority')
-            ui.label(str(advisor['high_priority'])).classes('text-h5')
-        with ui.card():
-            ui.label('Low Confidence Advice')
-            ui.label(str(advisor['low_confidence'])).classes('text-h5')
-
-    ui.label('Seasonal tasks').classes('text-h6')
-    with ui.card():
-        for t in season['tasks']:
-            ui.label('• ' + t)
-
-    ui.label('Operational briefing').classes('text-h6')
-    ui.label('Use Guided Inspection for new records: Draft → Validate → Stage → Commit.').classes('text-subtitle2')
-    ui.table(
-        columns=[
-            {'name':'code','label':'Colony/Nuc','field':'code'},
-            {'name':'priority','label':'Priority','field':'priority'},
-            {'name':'risk','label':'Risk','field':'risk'},
-            {'name':'score','label':'Score','field':'score'},
-            {'name':'recommendation','label':'Recommendation','field':'recommendation'},
-            {'name':'nuc_expansion','label':'Nuc Expansion','field':'nuc_expansion'},
-        ],
-        rows=morning_briefing(),
-        row_key='code',
-    ).classes('w-full')
+        for label,value in [('Version',APP_VERSION),('Season',season['phase']),('High Tasks',tasks['high']),('Advisor High',advisor['high']),('Low Confidence',advisor['low_confidence'])]:
+            with ui.card(): ui.label(label); ui.label(str(value)).classes('text-h6')
+    ui.label('Top Tasks').classes('text-h6')
+    ui.table(columns=[{'name':'priority','label':'Priority','field':'priority'},{'name':'colony_code','label':'Colony/Nuc','field':'colony_code'},{'name':'task_type','label':'Task','field':'task_type'},{'name':'recommendation','label':'Recommendation','field':'recommendation'}],rows=generated_tasks()[:10],row_key='recommendation').classes('w-full')
+    ui.label('Advisor').classes('text-h6')
+    ui.table(columns=[{'name':'colony_code','label':'Colony/Nuc','field':'colony_code'},{'name':'priority','label':'Priority','field':'priority'},{'name':'risk','label':'Risk','field':'risk'},{'name':'confidence','label':'Confidence','field':'confidence'},{'name':'recommendation','label':'Recommendation','field':'recommendation'}],rows=advisor_recommendations()[:10],row_key='colony_code').classes('w-full')

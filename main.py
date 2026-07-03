@@ -1,85 +1,26 @@
 from nicegui import ui
-from aos.core.bootstrap import boot_aos
-from aos.core.settings import APP_VERSION
-from aos.ui.dashboard import dashboard_page
-from aos.ui.colonies import colonies_page
-from aos.ui.queens import queens_page
-from aos.ui.equipment import equipment_page
-from aos.ui.inspections import inspections_page
-from aos.ui.guided_inspection import guided_inspection_page
-from aos.ui.natural_language_intake import natural_language_intake_page
-from aos.ui.genealogy import genealogy_page
-from aos.ui.knowledge_graph import knowledge_graph_page
-from aos.ui.weather import weather_page
-from aos.ui.seasonal import seasonal_page
-from aos.ui.validation import validation_page
-from aos.ui.tasks import tasks_page
-from aos.ui.ai_advisor import ai_advisor_page
-from aos.ui.data_integrity import data_integrity_page
-from aos.ui.migrations import migrations_page
-from aos.ui.commit import commit_page
-from aos.ui.import_export import import_export_page
-from aos.ui.ai import ai_page
-from aos.ui.system import system_page
-from aos.ui.self_test import self_test_page
-from aos.ui.update_manager import update_manager_page
-from aos.ui.github_preflight import github_preflight_page
-
+from aos.bootstrap import boot_aos
+from aos.config import APP_VERSION
+from aos.ui import dashboard,colonies,queens,equipment,inspections,guided,natural_language,tasks,advisor,knowledge_graph,weather,validation,exports,system
 boot_aos()
-
 @ui.page('/')
 def index():
-    ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label(f'v{APP_VERSION} Migration-Safe Update').classes('text-subtitle1')
-
+    ui.label('🐝 Apiary Operating System').classes('text-h4'); ui.label(f'v{APP_VERSION} Clean Foundation').classes('text-subtitle1')
     with ui.tabs().classes('w-full') as tabs:
-        dashboard = ui.tab('Morning Briefing')
-        colonies = ui.tab('Colonies')
-        queens = ui.tab('Queens')
-        equipment = ui.tab('Equipment')
-        natural_language = ui.tab('Natural Language Intake')
-        guided_inspection = ui.tab('Guided Inspection')
-        inspections = ui.tab('Inspections')
-        genealogy = ui.tab('Genealogy')
-        knowledge_graph = ui.tab('Knowledge Graph')
-        weather = ui.tab('Weather / Forage')
-        seasonal = ui.tab('Seasonal Planner')
-        tasks = ui.tab('Tasks')
-        ai_advisor = ui.tab('AI Advisor')
-        validation = ui.tab('Validation')
-        integrity = ui.tab('Data Integrity')
-        migrations = ui.tab('Migrations')
-        commit = ui.tab('Commit Queue')
-        io = ui.tab('Import / Export')
-        ai = ui.tab('AI Export')
-        github_preflight = ui.tab('GitHub Preflight')
-        update_manager = ui.tab('Update Manager')
-        self_test = ui.tab('Self-Test')
-        system = ui.tab('System')
-
-    with ui.tab_panels(tabs, value=dashboard).classes('w-full'):
-        with ui.tab_panel(dashboard): dashboard_page()
-        with ui.tab_panel(colonies): colonies_page()
-        with ui.tab_panel(queens): queens_page()
-        with ui.tab_panel(equipment): equipment_page()
-        with ui.tab_panel(natural_language): natural_language_intake_page()
-        with ui.tab_panel(guided_inspection): guided_inspection_page()
-        with ui.tab_panel(inspections): inspections_page()
-        with ui.tab_panel(genealogy): genealogy_page()
-        with ui.tab_panel(knowledge_graph): knowledge_graph_page()
-        with ui.tab_panel(weather): weather_page()
-        with ui.tab_panel(seasonal): seasonal_page()
-        with ui.tab_panel(tasks): tasks_page()
-        with ui.tab_panel(ai_advisor): ai_advisor_page()
-        with ui.tab_panel(validation): validation_page()
-        with ui.tab_panel(integrity): data_integrity_page()
-        with ui.tab_panel(migrations): migrations_page()
-        with ui.tab_panel(commit): commit_page()
-        with ui.tab_panel(io): import_export_page()
-        with ui.tab_panel(ai): ai_page()
-        with ui.tab_panel(github_preflight): github_preflight_page()
-        with ui.tab_panel(update_manager): update_manager_page()
-        with ui.tab_panel(self_test): self_test_page()
-        with ui.tab_panel(system): system_page()
-
-ui.run(title='AOS', host='127.0.0.1', port=8000, reload=False)
+        t_dashboard=ui.tab('Morning Briefing'); t_nl=ui.tab('Natural Language'); t_guided=ui.tab('Guided Inspection'); t_tasks=ui.tab('Tasks'); t_advisor=ui.tab('Advisor'); t_colonies=ui.tab('Colonies'); t_queens=ui.tab('Queens'); t_equipment=ui.tab('Equipment'); t_inspections=ui.tab('Inspections'); t_graph=ui.tab('Knowledge Graph'); t_weather=ui.tab('Weather'); t_validation=ui.tab('Validation'); t_exports=ui.tab('Exports / Self-Test'); t_system=ui.tab('System')
+    with ui.tab_panels(tabs,value=t_dashboard).classes('w-full'):
+        with ui.tab_panel(t_dashboard): dashboard.page()
+        with ui.tab_panel(t_nl): natural_language.page()
+        with ui.tab_panel(t_guided): guided.page()
+        with ui.tab_panel(t_tasks): tasks.page()
+        with ui.tab_panel(t_advisor): advisor.page()
+        with ui.tab_panel(t_colonies): colonies.page()
+        with ui.tab_panel(t_queens): queens.page()
+        with ui.tab_panel(t_equipment): equipment.page()
+        with ui.tab_panel(t_inspections): inspections.page()
+        with ui.tab_panel(t_graph): knowledge_graph.page()
+        with ui.tab_panel(t_weather): weather.page()
+        with ui.tab_panel(t_validation): validation.page()
+        with ui.tab_panel(t_exports): exports.page()
+        with ui.tab_panel(t_system): system.page()
+ui.run(title='AOS',host='127.0.0.1',port=8000,reload=False)
