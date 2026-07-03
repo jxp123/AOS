@@ -1,27 +1,28 @@
-# Apiary Operating System — v1.2 Data Integrity Release
+# AOS v1.3.1 — UI + CRUD Fix Release
 
-## Main purpose
-This release addresses possible data loss from earlier releases by adding:
+## Fixes in this release
 
-- Data Integrity tab
-- Baseline colony/nuc validation
-- Missing colony detection
-- One-click restore of baseline entities
-- Stronger bootstrap: it adds missing baseline records without overwriting existing records
-- Full expected colony/nuc baseline included in code
-- System audit when missing records are restored
+This release addresses the issues reported in v1.3:
 
-## Important
-Earlier releases sometimes seeded a smaller colony list. If your database was created from one of those releases, some hives/nucs may not appear. This release does **not** delete your existing data. It checks for missing baseline records and lets you restore them.
+- Inspection save button appeared to do nothing.
+- Weather / forage save showed success but did not refresh the table.
+- Colonies add/edit/delete disappeared.
+- Equipment add/edit/delete disappeared.
+- Queens add/edit/delete restored as well.
 
-## First time with this release
+## What changed
 
-1. Extract ZIP.
-2. Double-click `Install_AOS.bat` if needed.
-3. Double-click `Run_AOS.bat`.
-4. Open the **Data Integrity** tab.
-5. Click **Run Integrity Check**.
-6. If records are missing, click **Restore Missing Baseline Entities**.
+- Inspection table now refreshes after saving.
+- Weather table now refreshes after saving.
+- Colonies screen has Add / Edit / Delete buttons again.
+- Equipment screen has Add / Edit / Delete buttons again.
+- Queens screen has Add / Edit / Delete buttons again.
+- Repository methods for create/update/delete have been restored.
+- Errors now show a visible notification rather than silently failing.
 
-## Normal use
-Double-click `Run_AOS.bat`.
+## Recommended after installing
+
+1. Run `Run_AOS.bat`.
+2. Open **Migrations** and run **Apply Safe Migrations** if needed.
+3. Open **Data Integrity** and run **Restore Missing Baseline Entities** if needed.
+4. Test by adding one inspection and one weather record.

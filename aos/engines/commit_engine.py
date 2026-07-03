@@ -6,8 +6,7 @@ from aos.services.repository import Repository
 def validate_pending_commits():
     summary=validation_summary()
     with get_session() as s:
-        for p in s.query(PendingCommit).filter(PendingCommit.status=='Pending').all():
-            p.validation_status=summary['status']; p.validation_message=summary['message']
+        for p in s.query(PendingCommit).filter(PendingCommit.status=='Pending').all(): p.validation_status=summary['status']; p.validation_message=summary['message']
         s.commit()
     return summary
 def commit_all_pending():

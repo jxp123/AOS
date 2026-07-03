@@ -18,7 +18,6 @@ def seed_data():
         elif meta.value != SCHEMA_VERSION:
             meta.value = SCHEMA_VERSION
 
-        # Add missing baseline records without overwriting existing user-edited data.
         for c in BASELINE_COLONIES:
             if not session.query(Colony).filter_by(code=c[0]).first():
                 session.add(Colony(code=c[0], name=c[1], colony_type=c[2], equipment=c[3], objective=c[4], status=c[5], notes=c[6]))
@@ -33,5 +32,5 @@ def seed_data():
             session.add(GenealogyEvent(date='2026-07-03', event_type='Brood donation', source_colony='N91', target_colony='NJOL', queen_code='Q-JOLANTA', details='Nuc 91 donated 2 brood frames; queen seen.'))
             session.add(GenealogyEvent(date='2026-07-03', event_type='Brood donation', source_colony='N100', target_colony='NJOL', queen_code='Q-JOLANTA', details='Nuc 100 donated 1 brood frame; queen seen.'))
 
-        session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOT', entity_type='System', entity_code='AOS', details='Booted v1.2 with non-destructive baseline repair.'))
+        session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOT', entity_type='System', entity_code='AOS', details='Booted v1.3 with migration-safe baseline repair.'))
         session.commit()

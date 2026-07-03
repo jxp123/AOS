@@ -11,6 +11,7 @@ from aos.ui.weather import weather_page
 from aos.ui.seasonal import seasonal_page
 from aos.ui.validation import validation_page
 from aos.ui.data_integrity import data_integrity_page
+from aos.ui.migrations import migrations_page
 from aos.ui.commit import commit_page
 from aos.ui.import_export import import_export_page
 from aos.ui.ai import ai_page
@@ -21,7 +22,7 @@ boot_aos()
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label(f'v{APP_VERSION} Data Integrity Release').classes('text-subtitle1')
+    ui.label(f'v{APP_VERSION} Migration-Safe Update').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')
@@ -34,6 +35,7 @@ def index():
         seasonal = ui.tab('Seasonal Planner')
         validation = ui.tab('Validation')
         integrity = ui.tab('Data Integrity')
+        migrations = ui.tab('Migrations')
         commit = ui.tab('Commit Queue')
         io = ui.tab('Import / Export')
         ai = ui.tab('AI Export')
@@ -50,6 +52,7 @@ def index():
         with ui.tab_panel(seasonal): seasonal_page()
         with ui.tab_panel(validation): validation_page()
         with ui.tab_panel(integrity): data_integrity_page()
+        with ui.tab_panel(migrations): migrations_page()
         with ui.tab_panel(commit): commit_page()
         with ui.tab_panel(io): import_export_page()
         with ui.tab_panel(ai): ai_page()
