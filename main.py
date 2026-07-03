@@ -6,8 +6,9 @@ from aos.ui.queens import queens_page
 from aos.ui.equipment import equipment_page
 from aos.ui.inspections import inspections_page
 from aos.ui.genealogy import genealogy_page
-from aos.ui.commit import commit_page
 from aos.ui.validation import validation_page
+from aos.ui.commit import commit_page
+from aos.ui.import_export import import_export_page
 from aos.ui.ai import ai_page
 
 boot_aos()
@@ -15,7 +16,7 @@ boot_aos()
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label('v0.7 Commit + Validation').classes('text-subtitle1')
+    ui.label('v0.8 Excel Import/Export + Backups').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')
@@ -26,6 +27,7 @@ def index():
         genealogy = ui.tab('Genealogy')
         validation = ui.tab('Validation')
         commit = ui.tab('Commit Queue')
+        io = ui.tab('Import / Export')
         ai = ui.tab('AI Export')
 
     with ui.tab_panels(tabs, value=dashboard).classes('w-full'):
@@ -37,6 +39,7 @@ def index():
         with ui.tab_panel(genealogy): genealogy_page()
         with ui.tab_panel(validation): validation_page()
         with ui.tab_panel(commit): commit_page()
+        with ui.tab_panel(io): import_export_page()
         with ui.tab_panel(ai): ai_page()
 
 ui.run(title='AOS', host='127.0.0.1', port=8000)

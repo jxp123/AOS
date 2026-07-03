@@ -80,6 +80,6 @@ class PendingCommit(Base):
     entity_type = Column(String, default='')
     entity_code = Column(String, default='')
     payload = Column(Text, default='')
-    status = Column(String, default='Pending')  # Pending / Committed / Rejected
+    status = Column(String, default='Pending')
     validation_status = Column(String, default='Not run')
     validation_message = Column(Text, default='')

@@ -10,3 +10,7 @@ def backup_database():
     target = BACKUP_DIR / f'aos_backup_{stamp}.db'
     shutil.copy2(DB_PATH, target)
     return target
+
+def list_backups():
+    BACKUP_DIR.mkdir(exist_ok=True)
+    return sorted([p.name for p in BACKUP_DIR.glob('*.db')], reverse=True)
