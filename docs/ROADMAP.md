@@ -1,13 +1,14 @@
 # Roadmap
 
-## v0.8
-- Excel export
-- Conservative Excel import for Colonies
-- Manual backups
-
 ## v0.9
-- Stronger CRUD and migrations
-- Weather/forage scaffolding
+- Weather / forage scaffold
+- Seasonal planner
+- Migration/schema version scaffold
+- Nuc expansion scoring scaffold
+- Queen scoring fields
 
-## v1.0
-- Stable local AOS application
+## v1.0 target
+- Polished stable local application
+- Full migration support
+- Improved CRUD
+- Stronger rules and task engine

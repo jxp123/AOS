@@ -2,6 +2,12 @@ from sqlalchemy import Column, Integer, String, Text, Boolean, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from aos.db.session import Base
 
+class SystemMeta(Base):
+    __tablename__ = 'system_meta'
+    id = Column(Integer, primary_key=True)
+    key = Column(String, unique=True, nullable=False)
+    value = Column(String, default='')
+
 class Colony(Base):
     __tablename__ = 'colonies'
     id = Column(Integer, primary_key=True)
@@ -24,6 +30,9 @@ class Queen(Base):
     current_colony_code = Column(String, default='')
     status = Column(String, default='Active')
     evidence_status = Column(String, default='Unknown')
+    temperament_score = Column(Float, default=0)
+    brood_score = Column(Float, default=0)
+    honey_score = Column(Float, default=0)
     notes = Column(Text, default='')
 
 class Equipment(Base):
@@ -49,6 +58,7 @@ class Inspection(Base):
     queen_cells = Column(Integer, default=0)
     brood_frames = Column(Float, default=0)
     stores_frames = Column(Float, default=0)
+    bee_coverage_frames = Column(Float, default=0)
     temperament = Column(String, default='Unknown')
     notes = Column(Text, default='')
     colony = relationship('Colony', back_populates='inspections')
@@ -83,3 +93,14 @@ class PendingCommit(Base):
     status = Column(String, default='Pending')
     validation_status = Column(String, default='Not run')
     validation_message = Column(Text, default='')
+
+class WeatherObservation(Base):
+    __tablename__ = 'weather_observations'
+    id = Column(Integer, primary_key=True)
+    date = Column(String, nullable=False)
+    temperature_c = Column(Float, default=0)
+    wind = Column(String, default='')
+    rain = Column(String, default='')
+    forage_flow = Column(String, default='Unknown')
+    inspection_suitability = Column(String, default='Unknown')
+    notes = Column(Text, default='')

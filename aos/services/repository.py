@@ -1,9 +1,12 @@
 from datetime import datetime
-from sqlalchemy.exc import IntegrityError
 from aos.db.session import get_session
-from aos.db.models import Colony, Queen, Equipment, Inspection, GenealogyEvent, AuditLog, PendingCommit
+from aos.db.models import Colony, Queen, Equipment, Inspection, GenealogyEvent, AuditLog, PendingCommit, WeatherObservation, SystemMeta
 
 class Repository:
+    def system_meta(self):
+        with get_session() as s:
+            return {m.key: m.value for m in s.query(SystemMeta).all()}
+
     def list_apiary_entities(self, active_only=True):
         with get_session() as s:
             query = s.query(Colony)
@@ -11,7 +14,7 @@ class Repository:
                 query = query.filter(Colony.status == 'Active')
             return [self._dict_colony(c) for c in query.order_by(Colony.colony_type, Colony.code).all()]
 
-    def list_colonies(self): return self.list_apiary_entities(active_only=False)
+    def list_colonies(self): return self.list_apiary_entities(False)
 
     def list_queens(self):
         with get_session() as s:
@@ -30,8 +33,15 @@ class Repository:
             return [{'date': i.date, 'colony': i.colony.code if i.colony else '', 'inspection_type': i.inspection_type,
                      'queen_seen': 'Yes' if i.queen_seen else 'No', 'eggs_seen': 'Yes' if i.eggs_seen else 'No',
                      'queen_cells': i.queen_cells, 'brood_frames': i.brood_frames, 'stores_frames': i.stores_frames,
-                     'temperament': i.temperament, 'notes': i.notes or ''}
+                     'bee_coverage_frames': i.bee_coverage_frames, 'temperament': i.temperament, 'notes': i.notes or ''}
                     for i in s.query(Inspection).order_by(Inspection.date.desc(), Inspection.id.desc()).limit(200).all()]
+
+    def latest_inspection_by_colony(self):
+        latest = {}
+        for i in self.list_inspections():
+            if i['colony'] not in latest:
+                latest[i['colony']] = i
+        return latest
 
     def create_inspection(self, data):
         with get_session() as s:
@@ -40,20 +50,16 @@ class Repository:
             s.add(Inspection(**data)); s.commit()
             self.audit('CREATE','Inspection',colony.code,f"Inspection saved for {data.get('date')}")
 
-    def upsert_colony(self, data):
+    def list_weather(self):
         with get_session() as s:
-            c = s.query(Colony).filter_by(code=data['code']).first()
-            if not c:
-                c = Colony(code=data['code'], name=data.get('name') or data['code'])
-                s.add(c)
-            c.name = data.get('name', c.name)
-            c.colony_type = data.get('type', data.get('colony_type', c.colony_type))
-            c.equipment = data.get('equipment', c.equipment)
-            c.objective = data.get('objective', c.objective)
-            c.status = data.get('status', c.status)
-            c.notes = data.get('notes', c.notes)
-            s.commit()
-            self.audit('UPSERT','Colony',data['code'],'Colony imported/updated')
+            return [{'date': w.date, 'temperature_c': w.temperature_c, 'wind': w.wind, 'rain': w.rain,
+                     'forage_flow': w.forage_flow, 'inspection_suitability': w.inspection_suitability, 'notes': w.notes or ''}
+                    for w in s.query(WeatherObservation).order_by(WeatherObservation.date.desc()).limit(50).all()]
+
+    def create_weather(self, data):
+        with get_session() as s:
+            s.add(WeatherObservation(**data)); s.commit()
+            self.audit('CREATE','Weather',data.get('date',''), 'Weather/forage observation saved')
 
     def list_audit(self):
         with get_session() as s:
@@ -67,8 +73,8 @@ class Repository:
 
     def create_pending_commit(self, event_type, entity_type, entity_code, payload):
         with get_session() as s:
-            pc = PendingCommit(date=str(datetime.now().replace(microsecond=0)), event_type=event_type, entity_type=entity_type, entity_code=entity_code, payload=payload)
-            s.add(pc); s.commit()
+            s.add(PendingCommit(date=str(datetime.now().replace(microsecond=0)), event_type=event_type, entity_type=entity_type, entity_code=entity_code, payload=payload))
+            s.commit()
             self.audit('STAGE','PendingCommit',entity_code,f'Staged {event_type}')
 
     def list_pending_commits(self):
@@ -86,7 +92,9 @@ class Repository:
     @staticmethod
     def _dict_queen(q):
         return {'id': q.id, 'code': q.code, 'name': q.name, 'line': q.line, 'source': q.source,
-                'current_colony': q.current_colony_code, 'status': q.status, 'evidence': q.evidence_status, 'notes': q.notes or ''}
+                'current_colony': q.current_colony_code, 'status': q.status, 'evidence': q.evidence_status,
+                'temperament_score': q.temperament_score, 'brood_score': q.brood_score, 'honey_score': q.honey_score,
+                'notes': q.notes or ''}
 
     @staticmethod
     def _dict_equipment(e):

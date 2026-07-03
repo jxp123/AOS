@@ -16,4 +16,4 @@ def commit_page():
         ui.button('Stage Note', on_click=stage)
         ui.button('Validate Queue', on_click=validate)
         ui.button('Commit Pending', on_click=commit)
-    ui.table(columns=[{'name':'id','label':'ID','field':'id'},{'name':'date','label':'Date','field':'date'},{'name':'event_type','label':'Event','field':'event_type'},{'name':'entity_code','label':'Entity','field':'entity_code'},{'name':'payload','label':'Payload','field':'payload'},{'name':'status','label':'Status','field':'status'},{'name':'validation_status','label':'Validation','field':'validation_status'},{'name':'validation_message','label':'Message','field':'validation_message'}], rows=repo.list_pending_commits(), row_key='id').classes('w-full')
+    ui.table(columns=[{'name':'id','label':'ID','field':'id'},{'name':'date','label':'Date','field':'date'},{'name':'event_type','label':'Event','field':'event_type'},{'name':'entity_code','label':'Entity','field':'entity_code'},{'name':'payload','label':'Payload','field':'payload'},{'name':'status','label':'Status','field':'status'}], rows=repo.list_pending_commits(), row_key='id').classes('w-full')

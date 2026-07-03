@@ -9,10 +9,12 @@ def inspections_page():
     sel=ui.select(options,label='Colony / Nuc').classes('w-96')
     d=ui.input('Date',value=str(date.today())).classes('w-48')
     q=ui.checkbox('Queen seen'); eggs=ui.checkbox('Eggs seen')
+    brood=ui.number('Brood frames', value=0, min=0, step=0.5).classes('w-48')
+    bees=ui.number('Bee coverage frames', value=0, min=0, step=0.5).classes('w-48')
     notes=ui.textarea('Notes').classes('w-full')
     def save():
         if not sel.value: ui.notify('Select colony/nuc',type='warning'); return
-        repo.create_inspection({'colony_id':sel.value,'date':d.value,'inspection_type':'Brood','queen_seen':bool(q.value),'eggs_seen':bool(eggs.value),'larvae_seen':False,'queen_cells':0,'brood_frames':0,'stores_frames':0,'temperament':'Unknown','notes':notes.value or ''})
+        repo.create_inspection({'colony_id':sel.value,'date':d.value,'inspection_type':'Brood','queen_seen':bool(q.value),'eggs_seen':bool(eggs.value),'larvae_seen':False,'queen_cells':0,'brood_frames':float(brood.value or 0),'stores_frames':0,'bee_coverage_frames':float(bees.value or 0),'temperament':'Unknown','notes':notes.value or ''})
         ui.notify('Inspection saved',type='positive')
     ui.button('Save Inspection',on_click=save)
-    ui.table(columns=[{'name':'date','label':'Date','field':'date'},{'name':'colony','label':'Colony','field':'colony'},{'name':'queen_seen','label':'Queen','field':'queen_seen'},{'name':'eggs_seen','label':'Eggs','field':'eggs_seen'},{'name':'notes','label':'Notes','field':'notes'}], rows=repo.list_inspections(), row_key='date').classes('w-full')
+    ui.table(columns=[{'name':'date','label':'Date','field':'date'},{'name':'colony','label':'Colony','field':'colony'},{'name':'queen_seen','label':'Queen','field':'queen_seen'},{'name':'eggs_seen','label':'Eggs','field':'eggs_seen'},{'name':'brood_frames','label':'Brood','field':'brood_frames'},{'name':'bee_coverage_frames','label':'Bees','field':'bee_coverage_frames'},{'name':'notes','label':'Notes','field':'notes'}], rows=repo.list_inspections(), row_key='date').classes('w-full')

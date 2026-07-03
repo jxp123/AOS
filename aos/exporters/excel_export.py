@@ -14,5 +14,6 @@ def export_excel():
         pd.DataFrame(repo.list_equipment()).to_excel(writer, sheet_name='Equipment', index=False)
         pd.DataFrame(repo.list_inspections()).to_excel(writer, sheet_name='Inspections', index=False)
         pd.DataFrame(repo.list_genealogy()).to_excel(writer, sheet_name='Genealogy', index=False)
+        pd.DataFrame(repo.list_weather()).to_excel(writer, sheet_name='Weather', index=False)
         pd.DataFrame(repo.list_audit()).to_excel(writer, sheet_name='Audit', index=False)
     return path

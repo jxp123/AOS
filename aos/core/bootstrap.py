@@ -1,6 +1,6 @@
 from datetime import datetime
 from aos.db.session import init_db, get_session
-from aos.db.models import Colony, Queen, Equipment, GenealogyEvent, AuditLog
+from aos.db.models import Colony, Queen, Equipment, GenealogyEvent, AuditLog, SystemMeta
 
 def boot_aos():
     init_db()
@@ -8,6 +8,9 @@ def boot_aos():
 
 def seed_data():
     with get_session() as session:
+        if session.query(SystemMeta).filter_by(key='schema_version').first() is None:
+            session.add(SystemMeta(key='schema_version', value='0.9'))
+
         if session.query(Colony).count() == 0:
             colonies = [
                 ('H3','Hive 3','Hive','Langstroth','Honey','Active','Queen seen; underpopulated; super unused.'),
@@ -34,5 +37,5 @@ def seed_data():
             session.add(GenealogyEvent(date='2026-07-03', event_type='Brood donation', source_colony='N100', target_colony='NJOL', queen_code='Q-JOLANTA', details='Nuc 100 donated 1 brood frame; queen seen.'))
 
         if session.query(AuditLog).count() == 0:
-            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v0.8 baseline data.'))
+            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v0.9 baseline data.'))
         session.commit()

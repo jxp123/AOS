@@ -9,6 +9,8 @@ from aos.ui.genealogy import genealogy_page
 from aos.ui.validation import validation_page
 from aos.ui.commit import commit_page
 from aos.ui.import_export import import_export_page
+from aos.ui.weather import weather_page
+from aos.ui.seasonal import seasonal_page
 from aos.ui.ai import ai_page
 
 boot_aos()
@@ -16,7 +18,7 @@ boot_aos()
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label('v0.8 Excel Import/Export + Backups').classes('text-subtitle1')
+    ui.label('v0.9 Weather, Forage & Migration Foundation').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')
@@ -25,6 +27,8 @@ def index():
         equipment = ui.tab('Equipment')
         inspections = ui.tab('Inspections')
         genealogy = ui.tab('Genealogy')
+        weather = ui.tab('Weather / Forage')
+        seasonal = ui.tab('Seasonal Planner')
         validation = ui.tab('Validation')
         commit = ui.tab('Commit Queue')
         io = ui.tab('Import / Export')
@@ -37,6 +41,8 @@ def index():
         with ui.tab_panel(equipment): equipment_page()
         with ui.tab_panel(inspections): inspections_page()
         with ui.tab_panel(genealogy): genealogy_page()
+        with ui.tab_panel(weather): weather_page()
+        with ui.tab_panel(seasonal): seasonal_page()
         with ui.tab_panel(validation): validation_page()
         with ui.tab_panel(commit): commit_page()
         with ui.tab_panel(io): import_export_page()

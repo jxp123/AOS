@@ -6,7 +6,6 @@ from aos.core.settings import IMPORT_DIR
 
 def import_export_page():
     ui.label('Import / Export / Backups').classes('text-h5')
-    ui.label('Export creates an Excel workbook in the exports folder.')
     def do_export():
         path=export_excel(); ui.notify(f'Exported {path}', type='positive')
     def do_backup():
@@ -14,17 +13,12 @@ def import_export_page():
     with ui.row():
         ui.button('Export AOS to Excel', on_click=do_export)
         ui.button('Create Manual Backup', on_click=do_backup)
-    ui.separator()
-    ui.label('Import Colonies from Excel').classes('text-h6')
-    ui.label('Place an Excel file in the imports folder and type its filename below.')
-    filename=ui.input('Filename in imports folder, e.g. aos_export.xlsx').classes('w-96')
+    filename=ui.input('Import filename in imports folder').classes('w-96')
     def do_import():
         try:
             count=import_colonies_from_excel(IMPORT_DIR / filename.value)
-            ui.notify(f'Imported/updated {count} colonies', type='positive')
+            ui.notify(f'Processed {count} colonies in import scaffold', type='positive')
         except Exception as e:
             ui.notify(str(e), type='negative')
     ui.button('Import Colonies Sheet', on_click=do_import)
-    ui.separator()
-    ui.label('Existing Backups').classes('text-h6')
     ui.table(columns=[{'name':'file','label':'Backup file','field':'file'}], rows=[{'file':x} for x in list_backups()], row_key='file').classes('w-full')
