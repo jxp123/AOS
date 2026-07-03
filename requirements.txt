@@ -1,0 +1,5 @@
+nicegui
+sqlalchemy
+pandas
+openpyxl
+pydantic
