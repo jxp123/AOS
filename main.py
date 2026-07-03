@@ -21,6 +21,7 @@ from aos.ui.commit import commit_page
 from aos.ui.import_export import import_export_page
 from aos.ui.ai import ai_page
 from aos.ui.system import system_page
+from aos.ui.self_test import self_test_page
 
 boot_aos()
 
@@ -49,6 +50,7 @@ def index():
         commit = ui.tab('Commit Queue')
         io = ui.tab('Import / Export')
         ai = ui.tab('AI Export')
+        self_test = ui.tab('Self-Test')
         system = ui.tab('System')
 
     with ui.tab_panels(tabs, value=dashboard).classes('w-full'):
@@ -71,6 +73,7 @@ def index():
         with ui.tab_panel(commit): commit_page()
         with ui.tab_panel(io): import_export_page()
         with ui.tab_panel(ai): ai_page()
+        with ui.tab_panel(self_test): self_test_page()
         with ui.tab_panel(system): system_page()
 
 ui.run(title='AOS', host='127.0.0.1', port=8000, reload=False)

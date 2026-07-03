@@ -1,32 +1,40 @@
-# AOS v1.7.1 — Readonly Fix
+# AOS v1.8 — Self-Test + Regression Guard
 
-## Fix
+## Purpose
 
-This release fixes the NiceGUI server error:
+This release adds a built-in health check so we can catch broken releases earlier.
 
-`TypeError: got an unexpected keyword argument 'readonly'`
+## Added
 
-## Cause
+- **Self-Test** tab
+- `Self_Test_AOS.bat`
+- automated backend smoke tests
+- UI module import tests
+- database connectivity test
+- migration check test
+- CRUD method presence checks
+- parser test
+- guided inspection service test
+- latest regression check for unsupported `readonly=True`
 
-Some NiceGUI versions do not accept `readonly=True` as a direct argument on `ui.textarea`.
+## Why this matters
 
-## Change
+Previous releases had regressions:
+- buttons disappeared,
+- save buttons appeared to do nothing,
+- unsupported NiceGUI arguments caused 500 errors.
 
-Changed:
+This release adds a basic test harness so AOS can check itself before you rely on it.
 
-`ui.textarea(..., readonly=True)`
+## Recommended workflow
 
-to:
+After each new release:
 
-`ui.textarea(...).props('readonly')`
+1. Run `Run_AOS.bat`.
+2. Open **Self-Test**.
+3. Click **Run Self-Test**.
+4. Only then use the release for live data.
 
-## Included
+You can also double-click:
 
-This release is based on v1.7, so it also includes:
-- Natural Language Intake
-- Guided Inspection Drafts
-- Tasks
-- AI Advisor
-- Knowledge Graph
-- CRUD fixes
-- Installer safety
+`Self_Test_AOS.bat`
