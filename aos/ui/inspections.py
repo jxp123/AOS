@@ -24,17 +24,10 @@ def inspections_page():
             if not colony_select.value:
                 ui.notify('Select a colony/nuc from central apiary entity list.', type='warning'); return
             repo.create_inspection({
-                'colony_id': colony_select.value,
-                'date': inspection_date.value,
-                'inspection_type': inspection_type.value,
-                'queen_seen': bool(queen_seen.value),
-                'eggs_seen': bool(eggs_seen.value),
-                'larvae_seen': bool(larvae_seen.value),
-                'queen_cells': int(queen_cells.value or 0),
-                'brood_frames': float(brood_frames.value or 0),
-                'stores_frames': float(stores_frames.value or 0),
-                'temperament': temperament.value,
-                'notes': notes.value or '',
+                'colony_id': colony_select.value, 'date': inspection_date.value, 'inspection_type': inspection_type.value,
+                'queen_seen': bool(queen_seen.value), 'eggs_seen': bool(eggs_seen.value), 'larvae_seen': bool(larvae_seen.value),
+                'queen_cells': int(queen_cells.value or 0), 'brood_frames': float(brood_frames.value or 0),
+                'stores_frames': float(stores_frames.value or 0), 'temperament': temperament.value, 'notes': notes.value or '',
             })
             ui.notify('Inspection saved', type='positive')
         ui.button('Save Inspection', on_click=save)

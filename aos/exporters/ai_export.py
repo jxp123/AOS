@@ -16,9 +16,9 @@ def export_ai_state():
         'genealogy': repo.list_genealogy(),
         'morning_briefing': morning_briefing(),
         'hard_rules': [
-            'New Inspection dropdown must use Repository.list_apiary_entities().',
             'Never infer equipment type.',
-            'Nuc 94 is 14x12, not National.'
+            'Nuc 94 is 14x12, not National.',
+            'Validate frame compatibility before recommendations.'
         ]
     }
     path = EXPORT_DIR / 'apiary_state.json'

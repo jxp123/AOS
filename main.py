@@ -14,7 +14,7 @@ boot_aos()
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label('v0.6.1 Central Apiary Entities').classes('text-subtitle1')
+    ui.label('v0.6.2 CRUD Service Layer').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')

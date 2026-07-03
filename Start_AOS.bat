@@ -1,5 +1,5 @@
 @echo off
-title Apiary Operating System v0.6.1
+title Apiary Operating System v0.6.2
 cd /d "%~dp0"
 where python >nul 2>nul
 if errorlevel 1 (

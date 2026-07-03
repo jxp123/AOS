@@ -68,5 +68,5 @@ def seed_data():
                 session.add(GenealogyEvent(date=ev[0], event_type=ev[1], source_colony=ev[2], target_colony=ev[3], queen_code=ev[4], details=ev[5]))
 
         if session.query(AuditLog).count() == 0:
-            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v0.6.1 baseline data.'))
+            session.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='BOOTSTRAP', entity_type='System', entity_code='AOS', details='Seeded v0.6.2 baseline data.'))
         session.commit()

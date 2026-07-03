@@ -1,12 +1,13 @@
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 from aos.db.session import get_session
 from aos.db.models import Colony, Queen, Equipment, Inspection, GenealogyEvent, AuditLog
 
 class Repository:
     '''Single data access layer. All screens must use this class.'''
 
+    # ---------- Colonies / Apiary Entities ----------
     def list_apiary_entities(self, active_only=True):
-        '''Central view of all hives and nucs. Used by inspection dropdown and colonies screen.'''
         with get_session() as s:
             query = s.query(Colony)
             if active_only:
@@ -16,14 +17,107 @@ class Repository:
     def list_colonies(self):
         return self.list_apiary_entities(active_only=False)
 
+    def create_colony(self, data):
+        with get_session() as s:
+            c = Colony(**data)
+            s.add(c)
+            try:
+                s.commit()
+            except IntegrityError:
+                s.rollback()
+                raise ValueError(f"Colony code already exists: {data.get('code')}")
+            self.audit('CREATE', 'Colony', data.get('code'), 'Colony created')
+
+    def update_colony(self, code, data):
+        with get_session() as s:
+            c = s.query(Colony).filter_by(code=code).first()
+            if not c:
+                raise ValueError(f'Colony not found: {code}')
+            for k, v in data.items():
+                setattr(c, k, v)
+            s.commit()
+            self.audit('UPDATE', 'Colony', code, 'Colony updated')
+
+    def delete_colony(self, code):
+        with get_session() as s:
+            c = s.query(Colony).filter_by(code=code).first()
+            if not c:
+                raise ValueError(f'Colony not found: {code}')
+            s.delete(c)
+            s.commit()
+            self.audit('DELETE', 'Colony', code, 'Colony deleted')
+
+    # ---------- Queens ----------
     def list_queens(self):
         with get_session() as s:
             return [self._dict_queen(q) for q in s.query(Queen).order_by(Queen.code).all()]
 
+    def create_queen(self, data):
+        with get_session() as s:
+            q = Queen(**data)
+            s.add(q)
+            try:
+                s.commit()
+            except IntegrityError:
+                s.rollback()
+                raise ValueError(f"Queen code already exists: {data.get('code')}")
+            self.audit('CREATE', 'Queen', data.get('code'), 'Queen created')
+
+    def update_queen(self, code, data):
+        with get_session() as s:
+            q = s.query(Queen).filter_by(code=code).first()
+            if not q:
+                raise ValueError(f'Queen not found: {code}')
+            for k, v in data.items():
+                setattr(q, k, v)
+            s.commit()
+            self.audit('UPDATE', 'Queen', code, 'Queen updated')
+
+    def delete_queen(self, code):
+        with get_session() as s:
+            q = s.query(Queen).filter_by(code=code).first()
+            if not q:
+                raise ValueError(f'Queen not found: {code}')
+            s.delete(q)
+            s.commit()
+            self.audit('DELETE', 'Queen', code, 'Queen deleted')
+
+    # ---------- Equipment ----------
     def list_equipment(self):
         with get_session() as s:
             return [self._dict_equipment(e) for e in s.query(Equipment).order_by(Equipment.code).all()]
 
+    def create_equipment(self, data):
+        with get_session() as s:
+            e = Equipment(**data)
+            s.add(e)
+            try:
+                s.commit()
+            except IntegrityError:
+                s.rollback()
+                raise ValueError(f"Equipment code already exists: {data.get('code')}")
+            self.audit('CREATE', 'Equipment', data.get('code'), 'Equipment created')
+
+    def update_equipment(self, code, data):
+        with get_session() as s:
+            e = s.query(Equipment).filter_by(code=code).first()
+            if not e:
+                raise ValueError(f'Equipment not found: {code}')
+            for k, v in data.items():
+                setattr(e, k, v)
+            s.commit()
+            self.audit('UPDATE', 'Equipment', code, 'Equipment updated')
+
+    def delete_equipment(self, code):
+        with get_session() as s:
+            e = s.query(Equipment).filter_by(code=code).first()
+            if not e:
+                raise ValueError(f'Equipment not found: {code}')
+            s.delete(e)
+            s.commit()
+            self.audit('DELETE', 'Equipment', code, 'Equipment deleted')
+
+    # ---------- Logs ----------
     def list_genealogy(self):
         with get_session() as s:
             return [self._dict_genealogy(g) for g in s.query(GenealogyEvent).order_by(GenealogyEvent.date.desc(), GenealogyEvent.id.desc()).all()]
