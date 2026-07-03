@@ -1,36 +1,30 @@
-# AOS v1.3.2 — Installer Safety Release
+# AOS v1.4 — Knowledge Graph Foundation
 
-## Main purpose
+## Purpose
 
-This release makes installation and running safer after the disk-space issue.
+This release pulls forward the Phase 5 architecture: the Knowledge Graph.
 
-## Adds / fixes
+It does not attempt to finish all future 2.0 intelligence, but it introduces the core structures needed for:
 
-- Disk space check before install and run.
-- Clearer message if C: drive is low on space.
-- `Clean_AOS_Cache.bat` to clear pip cache.
-- `Doctor_AOS.bat` to check Python, folders, database and disk space.
-- Run script creates a backup before starting.
-- Installer no longer silently continues after failed package install.
-- Previous v1.3.1 fixes retained:
-  - Inspection save refreshes log.
-  - Weather save refreshes table.
-  - Colonies Add/Edit/Delete.
-  - Equipment Add/Edit/Delete.
-  - Queens Add/Edit/Delete.
+- Queen genealogy
+- Colony lineage
+- Event-based history
+- Relationships between colonies, queens, equipment and inspections
+- Timeline-style views
+- Graph export for future AI reasoning
 
-## Recommended use
+## Added
 
-First time:
+- Knowledge Graph tab
+- Colony timeline view
+- Queen lineage view
+- Graph relationship export
+- Graph summary cards
+- `KnowledgeGraphService`
+- AI export now includes graph data
+- Migration check for graph tables
+- Existing CRUD/UI fixes retained
 
-`Install_AOS.bat`
+## Important
 
-Daily:
-
-`Run_AOS.bat`
-
-If installation fails:
-
-1. Run `Clean_AOS_Cache.bat`
-2. Run `Doctor_AOS.bat`
-3. Run `Repair_AOS.bat`
+This is a foundation release. It creates the graph layer and views, but it does not yet do advanced visual node-link diagrams.

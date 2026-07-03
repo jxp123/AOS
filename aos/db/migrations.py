@@ -6,6 +6,7 @@ EXPECTED_COLUMNS = {
     'inspections': {
         'bee_coverage_frames': 'FLOAT DEFAULT 0',
     },
+    'graph_relationships': {},
     'queens': {
         'temperament_score': 'FLOAT DEFAULT 0',
         'brood_score': 'FLOAT DEFAULT 0',

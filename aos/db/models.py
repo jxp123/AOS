@@ -104,3 +104,17 @@ class WeatherObservation(Base):
     forage_flow = Column(String, default='Unknown')
     inspection_suitability = Column(String, default='Unknown')
     notes = Column(Text, default='')
+
+
+class GraphRelationship(Base):
+    __tablename__ = 'graph_relationships'
+    id = Column(Integer, primary_key=True)
+    date = Column(String, default='')
+    source_type = Column(String, nullable=False)
+    source_code = Column(String, nullable=False)
+    relationship = Column(String, nullable=False)
+    target_type = Column(String, nullable=False)
+    target_code = Column(String, nullable=False)
+    confidence = Column(Float, default=1.0)
+    evidence = Column(Text, default='')
+    notes = Column(Text, default='')

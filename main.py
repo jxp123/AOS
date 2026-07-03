@@ -7,6 +7,7 @@ from aos.ui.queens import queens_page
 from aos.ui.equipment import equipment_page
 from aos.ui.inspections import inspections_page
 from aos.ui.genealogy import genealogy_page
+from aos.ui.knowledge_graph import knowledge_graph_page
 from aos.ui.weather import weather_page
 from aos.ui.seasonal import seasonal_page
 from aos.ui.validation import validation_page
@@ -31,6 +32,7 @@ def index():
         equipment = ui.tab('Equipment')
         inspections = ui.tab('Inspections')
         genealogy = ui.tab('Genealogy')
+        knowledge_graph = ui.tab('Knowledge Graph')
         weather = ui.tab('Weather / Forage')
         seasonal = ui.tab('Seasonal Planner')
         validation = ui.tab('Validation')
@@ -48,6 +50,7 @@ def index():
         with ui.tab_panel(equipment): equipment_page()
         with ui.tab_panel(inspections): inspections_page()
         with ui.tab_panel(genealogy): genealogy_page()
+        with ui.tab_panel(knowledge_graph): knowledge_graph_page()
         with ui.tab_panel(weather): weather_page()
         with ui.tab_panel(seasonal): seasonal_page()
         with ui.tab_panel(validation): validation_page()
