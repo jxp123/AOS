@@ -6,6 +6,7 @@ if not exist logs mkdir logs
 if not exist backups mkdir backups
 set LOGFILE=logs\aos_run.log
 echo AOS run started %date% %time% > "%LOGFILE%"
+echo Tip: run Snapshot_AOS.bat before applying a new release.
 
 where python >nul 2>nul
 if errorlevel 1 (

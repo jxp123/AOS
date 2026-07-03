@@ -22,6 +22,7 @@ from aos.ui.import_export import import_export_page
 from aos.ui.ai import ai_page
 from aos.ui.system import system_page
 from aos.ui.self_test import self_test_page
+from aos.ui.update_manager import update_manager_page
 
 boot_aos()
 
@@ -50,6 +51,7 @@ def index():
         commit = ui.tab('Commit Queue')
         io = ui.tab('Import / Export')
         ai = ui.tab('AI Export')
+        update_manager = ui.tab('Update Manager')
         self_test = ui.tab('Self-Test')
         system = ui.tab('System')
 
@@ -73,6 +75,7 @@ def index():
         with ui.tab_panel(commit): commit_page()
         with ui.tab_panel(io): import_export_page()
         with ui.tab_panel(ai): ai_page()
+        with ui.tab_panel(update_manager): update_manager_page()
         with ui.tab_panel(self_test): self_test_page()
         with ui.tab_panel(system): system_page()
 

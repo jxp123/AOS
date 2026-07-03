@@ -8,6 +8,7 @@ from aos.db.migrations import migration_check
 from aos.services.repository import Repository
 from aos.services.guided_inspection_service import GuidedInspectionService
 from aos.engines.natural_language_parser import parse_inspection_note
+from aos.services.update_service import UpdateService
 
 
 def _result(name, status, message=""):
@@ -141,6 +142,17 @@ def run_self_tests():
     except Exception as e:
         # This may fail if NiceGUI run attempts to bind, so report detail but do not stop tests.
         results.append(_result("Application import", "WARN", str(e)))
+
+
+    # 10. Update manifest
+    try:
+        manifest = UpdateService().build_manifest()
+        if manifest.get("file_count", 0) > 0:
+            results.append(_result("Update manifest generation", "PASS", f"{manifest['file_count']} files"))
+        else:
+            results.append(_result("Update manifest generation", "FAIL", "No files in manifest"))
+    except Exception as e:
+        results.append(_result("Update manifest generation", "FAIL", str(e)))
 
     return results
 

@@ -1,40 +1,43 @@
-# AOS v1.8 — Self-Test + Regression Guard
+# AOS v1.9 — Update Manager Foundation
 
 ## Purpose
 
-This release adds a built-in health check so we can catch broken releases earlier.
+This release makes future updates safer and easier.
 
 ## Added
 
-- **Self-Test** tab
-- `Self_Test_AOS.bat`
-- automated backend smoke tests
-- UI module import tests
-- database connectivity test
-- migration check test
-- CRUD method presence checks
-- parser test
-- guided inspection service test
-- latest regression check for unsupported `readonly=True`
+- **Update Manager** tab
+- `Snapshot_AOS.bat`
+- `Restore_Last_Snapshot.bat`
+- local installation snapshot creation
+- file manifest export
+- version manifest export
+- update readiness checklist
+- GitHub baseline guidance
+- self-test retained
 
 ## Why this matters
 
-Previous releases had regressions:
-- buttons disappeared,
-- save buttons appeared to do nothing,
-- unsupported NiceGUI arguments caused 500 errors.
+Before we move toward AOS 2.0, we need a safer update process.
 
-This release adds a basic test harness so AOS can check itself before you rely on it.
+This release does **not** yet automatically pull from GitHub. It prepares the structure:
+- snapshot before update
+- manifest before update
+- self-test after update
+- restore if broken
 
 ## Recommended workflow
 
-After each new release:
+Before replacing files with a new release:
 
-1. Run `Run_AOS.bat`.
-2. Open **Self-Test**.
-3. Click **Run Self-Test**.
-4. Only then use the release for live data.
+1. Run `Snapshot_AOS.bat`
+2. Replace files
+3. Run `Run_AOS.bat`
+4. Open **Self-Test**
+5. If broken, run `Restore_Last_Snapshot.bat`
 
-You can also double-click:
+## GitHub recommendation
 
-`Self_Test_AOS.bat`
+Commit this whole release as:
+
+`AOS v1.9 update-manager baseline`
