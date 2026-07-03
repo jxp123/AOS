@@ -11,7 +11,8 @@ def export_ai_state():
     repo=Repository()
     state={'date':str(date.today()),'validation':validation_summary(),'seasonal':seasonal_tasks(),
            'apiary_entities':repo.list_apiary_entities(True),'queens':repo.list_queens(),'equipment':repo.list_equipment(),
-           'weather':repo.list_weather(),'genealogy':repo.list_genealogy(),'morning_briefing':morning_briefing()}
+           'weather':repo.list_weather(),'genealogy':repo.list_genealogy(),'morning_briefing':morning_briefing(),
+           'hard_rules':['Never infer equipment type','Nuc 94 is 14x12, not National','Validate compatibility before recommending frame transfers']}
     path=EXPORT_DIR/'apiary_state.json'
     path.write_text(json.dumps(state,indent=2),encoding='utf-8')
     return path

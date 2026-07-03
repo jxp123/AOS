@@ -6,7 +6,7 @@ def seasonal_tasks():
         phase = 'Swarm / expansion season'
         tasks = ['7-day brood inspection discipline', 'Monitor queen cells', 'Manage supers and brood congestion', 'Track new queen introductions']
     elif m in [8,9]:
-        phase = 'Late summer / autumn prep'
+        phase = 'Late summer / autumn preparation'
         tasks = ['Assess winter strength', 'Plan varroa treatment', 'Start feed planning', 'Reduce weak colonies']
     elif m in [10,11]:
         phase = 'Winter preparation'

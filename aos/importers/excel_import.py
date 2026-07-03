@@ -11,7 +11,6 @@ def import_colonies_from_excel(path):
     for _, row in df.iterrows():
         code = str(row.get('code', '')).strip()
         if not code or code == 'nan': continue
-        # Import upsert to be fully rebuilt in v1.0; currently audit-only safe scaffold.
         repo.audit('IMPORT', 'Colony', code, 'Colony seen in Excel import scaffold')
         count += 1
     return count

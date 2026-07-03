@@ -10,12 +10,12 @@ def colony_risk(colony):
 def nuc_expansion_score(colony, latest_inspection=None):
     if colony.get('type') != 'Nuc':
         return {'score':0, 'recommendation':'Not a nuc'}
-    score = 0
-    reasons = []
     if colony.get('equipment') == 'Unknown':
         return {'score':10, 'recommendation':'Do not move: equipment unknown'}
     if 'recover after brood donation' in (colony.get('objective') or '').lower():
         return {'score':15, 'recommendation':'Do not move: recovering after brood donation'}
+    score = 0
+    reasons = []
     if latest_inspection:
         brood = latest_inspection.get('brood_frames') or 0
         bees = latest_inspection.get('bee_coverage_frames') or 0

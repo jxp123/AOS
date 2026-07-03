@@ -1,6 +1,10 @@
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 from aos.db.session import get_session
-from aos.db.models import Colony, Queen, Equipment, Inspection, GenealogyEvent, AuditLog, PendingCommit, WeatherObservation, SystemMeta
+from aos.db.models import (
+    Colony, Queen, Equipment, Inspection, GenealogyEvent,
+    AuditLog, PendingCommit, WeatherObservation, SystemMeta
+)
 
 class Repository:
     def system_meta(self):
@@ -15,6 +19,14 @@ class Repository:
             return [self._dict_colony(c) for c in query.order_by(Colony.colony_type, Colony.code).all()]
 
     def list_colonies(self): return self.list_apiary_entities(False)
+
+    def create_colony(self, data):
+        with get_session() as s:
+            s.add(Colony(**data))
+            try: s.commit()
+            except IntegrityError:
+                s.rollback(); raise ValueError(f"Colony code already exists: {data.get('code')}")
+            self.audit('CREATE','Colony',data.get('code'),'Colony created')
 
     def list_queens(self):
         with get_session() as s:
@@ -34,7 +46,7 @@ class Repository:
                      'queen_seen': 'Yes' if i.queen_seen else 'No', 'eggs_seen': 'Yes' if i.eggs_seen else 'No',
                      'queen_cells': i.queen_cells, 'brood_frames': i.brood_frames, 'stores_frames': i.stores_frames,
                      'bee_coverage_frames': i.bee_coverage_frames, 'temperament': i.temperament, 'notes': i.notes or ''}
-                    for i in s.query(Inspection).order_by(Inspection.date.desc(), Inspection.id.desc()).limit(200).all()]
+                    for i in s.query(Inspection).order_by(Inspection.date.desc(), Inspection.id.desc()).limit(300).all()]
 
     def latest_inspection_by_colony(self):
         latest = {}
@@ -64,7 +76,7 @@ class Repository:
     def list_audit(self):
         with get_session() as s:
             return [{'date': a.date, 'action': a.action, 'entity_type': a.entity_type, 'entity_code': a.entity_code, 'details': a.details}
-                    for a in s.query(AuditLog).order_by(AuditLog.id.desc()).limit(100).all()]
+                    for a in s.query(AuditLog).order_by(AuditLog.id.desc()).limit(150).all()]
 
     def audit(self, action, entity_type, entity_code, details):
         with get_session() as s:

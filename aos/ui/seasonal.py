@@ -1,6 +1,5 @@
 from nicegui import ui
 from aos.engines.seasonal_engine import seasonal_tasks
-
 def seasonal_page():
     ui.label('Seasonal Planner').classes('text-h5')
     season = seasonal_tasks()

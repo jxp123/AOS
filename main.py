@@ -1,16 +1,17 @@
 from nicegui import ui
 from aos.core.bootstrap import boot_aos
+from aos.core.settings import APP_VERSION
 from aos.ui.dashboard import dashboard_page
 from aos.ui.colonies import colonies_page
 from aos.ui.queens import queens_page
 from aos.ui.equipment import equipment_page
 from aos.ui.inspections import inspections_page
 from aos.ui.genealogy import genealogy_page
+from aos.ui.weather import weather_page
+from aos.ui.seasonal import seasonal_page
 from aos.ui.validation import validation_page
 from aos.ui.commit import commit_page
 from aos.ui.import_export import import_export_page
-from aos.ui.weather import weather_page
-from aos.ui.seasonal import seasonal_page
 from aos.ui.ai import ai_page
 
 boot_aos()
@@ -18,7 +19,7 @@ boot_aos()
 @ui.page('/')
 def index():
     ui.label('🐝 Apiary Operating System').classes('text-h4')
-    ui.label('v0.9 Weather, Forage & Migration Foundation').classes('text-subtitle1')
+    ui.label(f'v{APP_VERSION} Stable Local Release').classes('text-subtitle1')
 
     with ui.tabs().classes('w-full') as tabs:
         dashboard = ui.tab('Morning Briefing')
