@@ -71,3 +71,15 @@ class AuditLog(Base):
     entity_type = Column(String, nullable=False)
     entity_code = Column(String, default='')
     details = Column(Text, default='')
+
+class PendingCommit(Base):
+    __tablename__ = 'pending_commits'
+    id = Column(Integer, primary_key=True)
+    date = Column(String, nullable=False)
+    event_type = Column(String, nullable=False)
+    entity_type = Column(String, default='')
+    entity_code = Column(String, default='')
+    payload = Column(Text, default='')
+    status = Column(String, default='Pending')  # Pending / Committed / Rejected
+    validation_status = Column(String, default='Not run')
+    validation_message = Column(Text, default='')

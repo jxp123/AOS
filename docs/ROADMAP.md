@@ -1,15 +1,17 @@
 # Roadmap
 
-## v0.6.2
-- CRUD through repository for colonies, queens, equipment
-
 ## v0.7
-- Commit engine with pending transactions
+- Pending commit queue
 - Validation gates
+- Backup before commit
 
 ## v0.8
 - Excel import/export
-- Backups
+- Automatic scheduled backups
+
+## v0.9
+- Stronger decision engine
+- Weather and forage
 
 ## v1.0
 - Stable local AOS application
