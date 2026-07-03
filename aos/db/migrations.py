@@ -14,6 +14,7 @@ EXPECTED_COLUMNS = {
     'graph_relationships': {},
     'task_items': {},
     'advisor_recommendations': {},
+    'guided_inspection_drafts': {},
 }
 
 def table_columns(table):

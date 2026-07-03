@@ -1,35 +1,26 @@
-# AOS v1.5 — AOS 2.0 Foundation
+# AOS v1.6 — Guided Workflow + Staged Commits
 
 ## Purpose
 
-This is the first accelerated step toward AOS 2.0.
+This release strengthens the AOS 2.0 foundation by making inspection entry safer.
 
-It does not claim to be the final 2.0 product. Instead, it adds the core foundation we need for 2.0:
+## Added
 
-- Guided inspection workflow
-- Task engine
-- AI advisor scaffold
-- Evidence engine
-- Confidence engine
-- Improved dashboard
-- Knowledge graph retained
-- Timeline retained
-- Migration-safe structure retained
-- Data integrity retained
-- CRUD fixes retained
+- Guided inspection now stages draft inspections before committing.
+- Inspection validation before save.
+- Evidence preview before staging.
+- Confidence score before staging.
+- Pending guided inspections list.
+- Commit staged guided inspection into the real inspection log.
+- Reject staged guided inspection.
+- Task engine and AI advisor retained.
+- Knowledge graph retained.
+- Installer safety retained.
 
-## New tabs / changed tabs
+## Why this matters
 
-- **Guided Inspection** — step-based inspection entry instead of one flat form.
-- **Tasks** — generated operational tasks from risk, season, data quality and inspections.
-- **AI Advisor** — produces evidence-based recommendations from current AOS data.
-- **Morning Briefing** — now includes task summary and advisor summary.
+AOS should not silently write weak or incomplete records. This release introduces the safer pattern:
 
-## Recommended workflow
+Draft → Validate → Stage → Commit
 
-1. Run `Run_AOS.bat`.
-2. Open **Migrations** and apply safe migrations if needed.
-3. Open **Data Integrity** and restore missing baseline if needed.
-4. Use **Guided Inspection** instead of the old Inspections form where possible.
-5. Use **Tasks** to decide what needs attention.
-6. Use **AI Advisor** to review evidence and confidence before taking action.
+This becomes the foundation for future AI-assisted natural language entry.

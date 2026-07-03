@@ -34,6 +34,7 @@ def dashboard_page():
             ui.label('• ' + t)
 
     ui.label('Operational briefing').classes('text-h6')
+    ui.label('Use Guided Inspection for new records: Draft → Validate → Stage → Commit.').classes('text-subtitle2')
     ui.table(
         columns=[
             {'name':'code','label':'Colony/Nuc','field':'code'},

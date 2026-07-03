@@ -1,5 +1,6 @@
 from datetime import date
 from aos.services.repository import Repository
+from aos.services.guided_inspection_service import GuidedInspectionService
 from aos.engines.risk_engine import colony_risk, nuc_expansion_score
 from aos.engines.seasonal_engine import seasonal_tasks
 
@@ -71,6 +72,20 @@ def generated_tasks():
             'recommendation': item,
             'evidence': 'Generated from seasonal planner.',
         })
+
+    
+    for draft in GuidedInspectionService().list_drafts():
+        if draft['status'] == 'Staged':
+            tasks.append({
+                'date': draft['created_at'],
+                'colony_code': draft['colony_code'],
+                'task_type': 'Commit Staged Inspection',
+                'priority': 'High' if draft['validation_status'] == 'PASS' else 'Medium',
+                'status': 'Open',
+                'reason': f"Draft inspection staged with validation {draft['validation_status']}.",
+                'recommendation': 'Review and commit or reject the staged guided inspection.',
+                'evidence': draft['validation_message'],
+            })
 
     priority_order = {'High': 0, 'Medium': 1, 'Low': 2}
     tasks.sort(key=lambda t: priority_order.get(t['priority'], 9))

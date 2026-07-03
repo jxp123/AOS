@@ -142,3 +142,26 @@ class AdvisorRecommendation(Base):
     recommendation = Column(Text, default='')
     evidence = Column(Text, default='')
     risks = Column(Text, default='')
+
+
+class GuidedInspectionDraft(Base):
+    __tablename__ = 'guided_inspection_drafts'
+    id = Column(Integer, primary_key=True)
+    created_at = Column(String, nullable=False)
+    colony_id = Column(Integer, default=0)
+    colony_code = Column(String, default='')
+    inspection_date = Column(String, default='')
+    queen_seen = Column(Boolean, default=False)
+    eggs_seen = Column(Boolean, default=False)
+    larvae_seen = Column(Boolean, default=False)
+    queen_cells = Column(Integer, default=0)
+    brood_frames = Column(Float, default=0)
+    stores_frames = Column(Float, default=0)
+    bee_coverage_frames = Column(Float, default=0)
+    temperament = Column(String, default='Unknown')
+    notes = Column(Text, default='')
+    evidence = Column(Text, default='')
+    confidence = Column(Float, default=0)
+    validation_status = Column(String, default='Not run')
+    validation_message = Column(Text, default='')
+    status = Column(String, default='Staged')  # Staged / Committed / Rejected
