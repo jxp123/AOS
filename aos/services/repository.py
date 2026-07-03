@@ -1,6 +1,7 @@
 from datetime import datetime
 from aos.db.session import get_session
 from aos.db.models import Colony, Queen, Equipment, Inspection, GenealogyEvent, AuditLog, PendingCommit, WeatherObservation, SystemMeta
+from aos.core.baseline import BASELINE_COLONIES, BASELINE_QUEENS, BASELINE_EQUIPMENT
 
 class Repository:
     def system_meta(self):
@@ -23,6 +24,40 @@ class Repository:
     def list_equipment(self):
         with get_session() as s:
             return [self._dict_equipment(e) for e in s.query(Equipment).order_by(Equipment.code).all()]
+
+    def baseline_integrity(self):
+        current_colonies = {c['code'] for c in self.list_colonies()}
+        current_queens = {q['code'] for q in self.list_queens()}
+        current_equipment = {e['code'] for e in self.list_equipment()}
+        missing_colonies = [c for c in BASELINE_COLONIES if c[0] not in current_colonies]
+        missing_queens = [q for q in BASELINE_QUEENS if q[0] not in current_queens]
+        missing_equipment = [e for e in BASELINE_EQUIPMENT if e[0] not in current_equipment]
+        return {
+            'expected_colonies': len(BASELINE_COLONIES),
+            'actual_colonies': len(current_colonies),
+            'missing_colonies': [{'code': c[0], 'name': c[1], 'type': c[2], 'equipment': c[3], 'status': c[5]} for c in missing_colonies],
+            'missing_queens': [{'code': q[0], 'name': q[1], 'line': q[2], 'current_colony': q[4]} for q in missing_queens],
+            'missing_equipment': [{'code': e[0], 'name': e[1], 'type': e[2], 'location': e[3]} for e in missing_equipment],
+        }
+
+    def restore_missing_baseline(self):
+        with get_session() as s:
+            added = {'colonies':0, 'queens':0, 'equipment':0}
+            for c in BASELINE_COLONIES:
+                if not s.query(Colony).filter_by(code=c[0]).first():
+                    s.add(Colony(code=c[0], name=c[1], colony_type=c[2], equipment=c[3], objective=c[4], status=c[5], notes=c[6]))
+                    added['colonies'] += 1
+            for q in BASELINE_QUEENS:
+                if not s.query(Queen).filter_by(code=q[0]).first():
+                    s.add(Queen(code=q[0], name=q[1], line=q[2], source=q[3], current_colony_code=q[4], status=q[5], evidence_status=q[6], notes=q[7]))
+                    added['queens'] += 1
+            for e in BASELINE_EQUIPMENT:
+                if not s.query(Equipment).filter_by(code=e[0]).first():
+                    s.add(Equipment(code=e[0], name=e[1], type=e[2], current_location=e[3], compatible_with=e[4], status=e[5], notes=e[6]))
+                    added['equipment'] += 1
+            s.add(AuditLog(date=str(datetime.now().replace(microsecond=0)), action='RESTORE_BASELINE', entity_type='System', entity_code='AOS', details=str(added)))
+            s.commit()
+        return added
 
     def list_genealogy(self):
         with get_session() as s:

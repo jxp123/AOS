@@ -1,6 +1,11 @@
 from aos.services.repository import Repository
 def run_integrity_checks():
     repo=Repository(); issues=[]; colonies=repo.list_colonies(); codes={c['code'] for c in colonies}
+    baseline = repo.baseline_integrity()
+    for m in baseline['missing_colonies']:
+        issues.append({'severity':'High','item':m['code'],'issue':'Missing baseline colony/nuc record'})
+    for m in baseline['missing_queens']:
+        issues.append({'severity':'Medium','item':m['code'],'issue':'Missing baseline queen record'})
     for c in colonies:
         if not c['code']: issues.append({'severity':'High','item':'Colony','issue':'Missing code'})
         if c['equipment']=='Unknown': issues.append({'severity':'Medium','item':c['code'],'issue':'Equipment type is unknown'})

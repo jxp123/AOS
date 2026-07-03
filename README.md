@@ -1,49 +1,27 @@
-# Apiary Operating System — v1.1 Dummy-Proof Launcher Release
+# Apiary Operating System — v1.2 Data Integrity Release
 
-## What this release adds
+## Main purpose
+This release addresses possible data loss from earlier releases by adding:
 
-This release focuses on making AOS easier and safer to run.
+- Data Integrity tab
+- Baseline colony/nuc validation
+- Missing colony detection
+- One-click restore of baseline entities
+- Stronger bootstrap: it adds missing baseline records without overwriting existing records
+- Full expected colony/nuc baseline included in code
+- System audit when missing records are restored
 
-New launchers:
-- `Install_AOS.bat` — first-time setup
-- `Run_AOS.bat` — daily launcher
-- `Repair_AOS.bat` — repair dependencies
-- `Backup_AOS.bat` — manual database backup
-- `Start_AOS.bat` — compatibility launcher that calls `Run_AOS.bat`
+## Important
+Earlier releases sometimes seeded a smaller colony list. If your database was created from one of those releases, some hives/nucs may not appear. This release does **not** delete your existing data. It checks for missing baseline records and lets you restore them.
 
-New safeguards:
-- Uses a local Python virtual environment `.venv`
-- Does not install packages globally
-- Checks Python is installed
-- Creates required folders automatically
-- Backs up the database before repair
-- Writes startup logs to `logs/`
-- Clearer error messages
+## First time with this release
 
-## First time
+1. Extract ZIP.
+2. Double-click `Install_AOS.bat` if needed.
+3. Double-click `Run_AOS.bat`.
+4. Open the **Data Integrity** tab.
+5. Click **Run Integrity Check**.
+6. If records are missing, click **Restore Missing Baseline Entities**.
 
-Double-click:
-
-`Install_AOS.bat`
-
-Then double-click:
-
-`Run_AOS.bat`
-
-## Normal daily use
-
-Double-click:
-
-`Run_AOS.bat`
-
-## If something breaks
-
-Double-click:
-
-`Repair_AOS.bat`
-
-## Manual backup
-
-Double-click:
-
-`Backup_AOS.bat`
+## Normal use
+Double-click `Run_AOS.bat`.
