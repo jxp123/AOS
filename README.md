@@ -1,43 +1,31 @@
-# AOS v1.9 — Update Manager Foundation
+# AOS v1.10 — GitHub Update Preflight
 
 ## Purpose
 
-This release makes future updates safer and easier.
+This release prepares AOS for safer GitHub-based updating.
+
+It does not automatically pull from GitHub yet. It adds the configuration, checks and workflow needed before automatic update is safe.
 
 ## Added
 
-- **Update Manager** tab
-- `Snapshot_AOS.bat`
-- `Restore_Last_Snapshot.bat`
-- local installation snapshot creation
-- file manifest export
-- version manifest export
-- update readiness checklist
-- GitHub baseline guidance
-- self-test retained
-
-## Why this matters
-
-Before we move toward AOS 2.0, we need a safer update process.
-
-This release does **not** yet automatically pull from GitHub. It prepares the structure:
-- snapshot before update
-- manifest before update
-- self-test after update
-- restore if broken
+- GitHub Update Preflight tab
+- GitHub settings file scaffold
+- Repository URL / branch / mode checks
+- Local manifest comparison foundation
+- Update checklist
+- Safer release workflow guidance
+- `github_settings.json`
+- `Configure_GitHub_Update.bat`
+- Self-test includes GitHub update preflight
 
 ## Recommended workflow
 
-Before replacing files with a new release:
+1. Commit this release to GitHub as your baseline.
+2. Open AOS.
+3. Go to **GitHub Preflight**.
+4. Enter/check your repository details in `github_settings.json`.
+5. Use **Update Manager** snapshots before replacing files.
 
-1. Run `Snapshot_AOS.bat`
-2. Replace files
-3. Run `Run_AOS.bat`
-4. Open **Self-Test**
-5. If broken, run `Restore_Last_Snapshot.bat`
+## Next target
 
-## GitHub recommendation
-
-Commit this whole release as:
-
-`AOS v1.9 update-manager baseline`
+v1.11 should add one-click download of a GitHub ZIP release into a staging folder.

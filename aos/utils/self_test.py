@@ -9,6 +9,7 @@ from aos.services.repository import Repository
 from aos.services.guided_inspection_service import GuidedInspectionService
 from aos.engines.natural_language_parser import parse_inspection_note
 from aos.services.update_service import UpdateService
+from aos.services.github_update_service import GitHubUpdateService
 
 
 def _result(name, status, message=""):
@@ -153,6 +154,17 @@ def run_self_tests():
             results.append(_result("Update manifest generation", "FAIL", "No files in manifest"))
     except Exception as e:
         results.append(_result("Update manifest generation", "FAIL", str(e)))
+
+
+    # 11. GitHub preflight callable
+    try:
+        checks = GitHubUpdateService().preflight_checks()
+        if checks:
+            results.append(_result("GitHub update preflight", "PASS", f"{len(checks)} checks generated"))
+        else:
+            results.append(_result("GitHub update preflight", "FAIL", "No checks generated"))
+    except Exception as e:
+        results.append(_result("GitHub update preflight", "FAIL", str(e)))
 
     return results
 

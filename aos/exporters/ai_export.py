@@ -8,9 +8,10 @@ from aos.db.migrations import migration_check
 from aos.engines.task_engine import generated_tasks
 from aos.engines.advisor_engine import advisor_recommendations
 from aos.services.guided_inspection_service import GuidedInspectionService
+from aos.services.github_update_service import GitHubUpdateService
 from aos.core.settings import EXPORT_DIR
 from aos.services.knowledge_graph_service import KnowledgeGraphService
 def export_ai_state():
     EXPORT_DIR.mkdir(exist_ok=True); repo=Repository()
-    state={'date':str(date.today()),'validation':validation_summary(),'migration_check':migration_check(),'baseline_integrity':repo.baseline_integrity(),'seasonal':seasonal_tasks(),'apiary_entities':repo.list_apiary_entities(True),'queens':repo.list_queens(),'equipment':repo.list_equipment(),'weather':repo.list_weather(),'genealogy':repo.list_genealogy(),'morning_briefing':morning_briefing(),'knowledge_graph':KnowledgeGraphService().export_graph(),'tasks':generated_tasks(),'advisor_recommendations':advisor_recommendations(),'guided_inspection_drafts':GuidedInspectionService().list_drafts(),'natural_language_intake':'rule_based_parser_enabled_v1'}
+    state={'date':str(date.today()),'validation':validation_summary(),'migration_check':migration_check(),'baseline_integrity':repo.baseline_integrity(),'seasonal':seasonal_tasks(),'apiary_entities':repo.list_apiary_entities(True),'queens':repo.list_queens(),'equipment':repo.list_equipment(),'weather':repo.list_weather(),'genealogy':repo.list_genealogy(),'morning_briefing':morning_briefing(),'knowledge_graph':KnowledgeGraphService().export_graph(),'tasks':generated_tasks(),'advisor_recommendations':advisor_recommendations(),'guided_inspection_drafts':GuidedInspectionService().list_drafts(),'natural_language_intake':'rule_based_parser_enabled_v1','github_preflight':GitHubUpdateService().preflight_checks()}
     path=EXPORT_DIR/'apiary_state.json'; path.write_text(json.dumps(state,indent=2),encoding='utf-8'); return path
