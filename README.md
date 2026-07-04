@@ -1,34 +1,22 @@
-# AOS v2.1 — Inspection Scheduler
+# AOS v2.2 — Apiary Operations Centre
 
-This release makes the 7-day inspection rule explicit and visible.
+## Main addition
 
-## What is new
+This release adds the **Operations Centre** so AOS clearly shows:
 
-- **Inspection Scheduler** tab
-- **Today's Inspection Plan** on the Morning Briefing
-- Clear status for every hive and nuc:
-  - 🔴 Overdue
-  - 🟠 Due today
-  - 🟡 Due soon
-  - 🟢 Recent
-  - ⚪ No inspection recorded
-- Default active hive/nuc interval is **7 days**
-- Higher-risk strategies can shorten the interval:
-  - Queen rearing / mating: 4 days
-  - Recovery / requeening / splits: 5 days
-  - Standard active hive or nuc: 7 days
-  - Winter / observation: longer interval
-- Tasks now include overdue and due inspection actions
-- AI export includes inspection schedule context
+- overdue inspections
+- inspections due today
+- due-soon inspections
+- suggested route
+- equipment checklist
+- high-priority tasks
+- estimated apiary visit duration
+- AI-style shift briefing
 
-## Daily workflow
+## Recommended use
 
-1. Open AOS.
-2. Start with **Morning Briefing**.
-3. Review **Today's Inspection Plan**.
-4. Open **Inspection Scheduler** if you want the full list and 14-day plan.
-5. Use **Guided Inspection** or **Natural Language** to record the inspection.
+Open AOS and start with:
 
-## Key principle
+**Operations Centre**
 
-You should not need to calculate inspection dates manually. AOS now calculates them from the latest inspection record.
+This is now the main working screen before inspecting the apiary.

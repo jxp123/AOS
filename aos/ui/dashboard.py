@@ -1,5 +1,6 @@
 from nicegui import ui
 from aos.config import APP_VERSION
+from aos.engines.operations_engine import todays_work, shift_briefing
 from aos.engines.task_engine import task_summary, generated_tasks
 from aos.engines.advisor_engine import advisor_summary, advisor_recommendations
 from aos.engines.seasonal_engine import seasonal_tasks
